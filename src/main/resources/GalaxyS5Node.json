@@ -1,0 +1,34 @@
+{
+    "capabilities": [
+        {
+            "app": "",
+            "automationName": "Appium",
+            "browserName": "",
+            "udid": "4d001eef4d2c3131",
+            "platformName": "Android",
+            "platformVersion": "6.0.1",
+            "deviceName": "",
+			"bp":"6202",			
+            "appPackage": "com.waze",
+			"appWaitPackage": "com.waze",
+			"appWaitActivity":"com.waze.MainActivity",
+            "appActivity": "com.waze.FreeMapAppActivity",
+            "maxInstances": 2,
+			"unicodeKeyboard":"true",
+			"fullReset":"true"
+        }
+    ],
+    "configuration": {
+        "role":  "node",
+        "cleanUpCycle": 2000,        
+        "proxy": "org.openqa.grid.selenium.proxy.DefaultRemoteProxy",
+        "url": "http://localhost:4723/wd/hub",
+        "host": "localhost",
+        "port": 4723,
+        "maxSession": 5,
+        "register": true,
+        "registerCycle": 5000,
+        "hubPort": 4444,
+        "hubHost": "localhost"
+    }
+}

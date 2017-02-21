@@ -1,0 +1,1 @@
+appium --nodeconfig ~/IdeaProjects/WazeAutomationAndroid/src/main/resources/LGG2.json --address 127.0.0.1 --port 4725 -bp 6204 --command-timeout 600 --log ~/IdeaProjects/WazeAutomationAndroid/src/main/appiumLog2.log

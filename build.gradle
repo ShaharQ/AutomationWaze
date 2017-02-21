@@ -1,0 +1,35 @@
+group 'WazeAutomation'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+
+sourceCompatibility = 1.8
+version = '1.0'
+
+
+sourceSets {
+    jars
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    compile fileTree(dir: 'lib', include: ['*.jar'])
+    compile group: 'org.testng', name: 'testng', version: '6.9.10'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.+'
+    compile group: 'io.appium', name: 'java-client', version: '4.1.2'
+    compile 'com.testdroid:testdroid-api:2.9'
+    compile group: 'org.json', name: 'json', version: '20090211'
+}
+
+test {
+    useTestNG {
+        suites 'src/main/resources/testng.xml'
+    }
+}
