@@ -159,13 +159,14 @@ public class Activity {
         installApk(phone,driver);
 
         //5.change the main page
-        DriverManager.addCapbilities("appWaitActivity", "com.waze.MainActivity");
-        DriverManager.addCapbilities("appWaitPackage", "com.waze");
-        DriverManager.addCapbilities("appPackage","com.waze");
-        DriverManager.addCapbilities("appActivity","com.waze.FreeMapAppActivity");
+        DriverManager driverManager = new DriverManager();
+        driverManager.addCapbilities("appWaitActivity", "com.waze.MainActivity");
+        driverManager.addCapbilities("appWaitPackage", "com.waze");
+        driverManager.addCapbilities("appPackage","com.waze");
+        driverManager.addCapbilities("appActivity","com.waze.FreeMapAppActivity");
 
         //6. adding the changes to the driver
-        DriverManager.reloadDriver(driver , "4444");
+        driverManager.reloadDriver(driver , "4444");
 
     }
 
@@ -264,5 +265,4 @@ public class Activity {
             driver.swipe(startx, starty, endx, starty, 1000);
 
         }
-
 }

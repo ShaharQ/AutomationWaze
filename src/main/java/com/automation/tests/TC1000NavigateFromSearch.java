@@ -11,6 +11,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+
 import java.awt.*;
 import java.io.IOException;
 
@@ -26,15 +27,18 @@ public class TC1000NavigateFromSearch {
     DirectionsHelper directionsHelper;
     ETAPopupHelper etaPopupHelper;
     ConfirmHelper confirmHelper;
-    String proccessName;
+    String proccessName , phoneName;
+    DriverManager driverManager = new DriverManager();
+
 
     @BeforeTest
         public void setup() throws IOException, InterruptedException {
 
         Utils.openProcess("appium", "LaunchAppiumServer");
-        proccessName  = System.getProperty("Phone") + "Node";
-        Utils.openProcess( System.getProperty("Phone"), proccessName);
-        driver = DriverManager.getDriver( System.getProperty("Phone"), "4444");
+        phoneName  = driverManager.getPhoneModel();
+        proccessName =  phoneName + "Node";
+        Utils.openProcess( phoneName, proccessName);
+        driver = driverManager.getDriver( phoneName, "4444");
 
     }
 

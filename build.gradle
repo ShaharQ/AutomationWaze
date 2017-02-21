@@ -25,7 +25,7 @@ dependencies {
     compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.+'
     compile group: 'io.appium', name: 'java-client', version: '4.1.2'
     compile 'com.testdroid:testdroid-api:2.9'
-    compile group: 'org.json', name: 'json', version: '20090211'
+    compile group: 'org.json', name: 'json', version: '20141113'
 }
 
 test {

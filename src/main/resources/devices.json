@@ -3,26 +3,28 @@
     "mobileOs": "Android",
     "osVersion": 6.0,
     "hasSim": true,
-    "uuid": "4d001eef4d2c3131",
+    "udid": "4d001eef4d2c3131",
     "bp": 6202,
     "appWaitPackage": "com.google.android.packageinstaller",
     "appWaitActivity": "com.android.packageinstaller.permission.ui.GrantPermissionsActivity",
     "appPackage": "com.waze",
     "appActivity" : "",
-    "model": "Samsung S5",
-    "browserName": ""
+    "deviceName": "SamsungS5",
+    "browserName": "",
+    "automationName" : "Appium"
   },
   {
     "mobileOs" : "Android",
     "osVersion" : 5.0,
     "hasSim": true,
-    "uuid": "LGD802988c53e6",
+    "udid": "LGD802988c53e6",
     "bp": 6204,
     "appWaitPackage": "com.waze",
     "appWaitActivity": "",
     "appPackage": "com.waze",
     "appActivity" : "com.waze.FreeMapAppActivity",
-    "model": "Lg G2",
-    "browserName": ""
+    "deviceName": "LGG2",
+    "browserName": "",
+    "automationName" : "Appium"
   }]
 
