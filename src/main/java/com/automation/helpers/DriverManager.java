@@ -30,39 +30,20 @@ public class DriverManager {
         AppiumDriver driver = null;
         
         if(deviceName != null) {
-            getTheDataFromJson(deviceName);
+           getTheDataFromJson(deviceName);
         } else {
             getTheDateFromLocalProperties();
         }
-
-
-//        if (deviceName.equals("LGG2")) {
-//            capabilities.setCapability("platformVersion", "5.0.2");
-////          capabilities.setCapability("appPackage", "com.lge.filemanager");
-////          capabilities.setCapability("appActivity", "com.lge.filemanager.MainActivity");
-//            capabilities.setCapability("appPackage", "com.waze");
-//            DriverManager.addCapbilities("appWaitPackage", "com.waze");
-//            DriverManager.addCapbilities("appWaitPackage", "com.waze.FreeMapAppActivity");
-//            capabilities.setCapability("udid", "LGD802988c53e6");
-//            capabilities.setCapability("bp", "6204");
-//
-//        } else if (deviceName.equals("SamsungS5")) {
-//            capabilities.setCapability("platformVersion", "6.0.1");
-//            //capabilities.setCapability("appWaitActivity", "HomeScreenActivity");
-//            //capabilities.setCapability("appActivity", "com.waze.MainActivity");
-//            capabilities.setCapability("appWaitPackage", "com.google.android.packageinstaller");
-//            capabilities.setCapability("appWaitActivity", "com.android.packageinstaller.permission.ui.GrantPermissionsActivity");
-//        }
 
         Object deviceType = capabilities.getCapability("mobileOs");
 
         if (deviceType.equals("Android")) {
             driver = new AndroidDriver(new URL("http://localhost:" + port + "/wd/hub"), capabilities);
-            driver.manage().timeouts().implicitlyWait(1, TimeUnit.MINUTES);
+            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
             firstAlertHandle(driver, deviceName);
         } else {
-            driver = new IOSDriver(new URL("http://127.0.0.1:" + port + "/wd/hub"), capabilities);
-            driver.manage().timeouts().implicitlyWait(1, TimeUnit.MINUTES);
+            driver = new IOSDriver(new URL("http://localhost:" + port + "/wd/hub"), capabilities);
+            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         }
 
         return driver;
@@ -100,12 +81,11 @@ public class DriverManager {
     private void getTheDateFromLocalProperties() {
 
         Properties prop = new Properties();
-        InputStream input = null;
+
 
         try {
-        String filenamePath = "src/main/resources//local.properties";
-        input = getClass().getClassLoader().getResourceAsStream(filenamePath);
-        prop.load(input);
+
+        prop.load(new FileInputStream("src/main/resources/local.properties"));
 
         capabilities = new DesiredCapabilities();
         capabilities.setCapability("automationName", prop.getProperty("automationName"));

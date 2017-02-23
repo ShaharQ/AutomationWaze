@@ -25,7 +25,6 @@ public class Utils {
                 System.out.println("About to start " + proccessFile.getAbsolutePath());
                 Process p = pb.start();
 
-
             } else {
 
                 File proccessFile = new File("src/main/resources/" + proccessName + ".bat");

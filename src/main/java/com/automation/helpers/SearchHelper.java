@@ -51,6 +51,11 @@ public class SearchHelper extends Activity{
     public WebElement goButton;
     @FindBy(id = "com.waze:id/tabStrip")
     public WebElement bottomTab;
+    @FindBy(id = "com.waze:id/lblTitle")
+    public List<WebElement> autoCompleteSearchResults;
+    @FindBy(id = "com.waze:id/titleBarTitleText")
+    public WebElement titleBarText;
+
 
     public SearchHelper(AppiumDriver driver) throws InterruptedException {
         super(driver);

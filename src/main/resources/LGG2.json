@@ -6,7 +6,7 @@
             "browserName": "",
             "udid": "04f1f63d1e532935",
             "platformName": "Android",
-            "platformVersion": "4.4.2",
+            "platformVersion": "5.0.2",
             "deviceName": "",
 			"bp":"6204",			
             "appPackage": "com.waze",

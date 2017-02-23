@@ -265,4 +265,34 @@ public class Activity {
             driver.swipe(startx, starty, endx, starty, 1000);
 
         }
+
+    public void verifyThatTheTextOfTheElementIsAsExpected(WebElement element ,String... params) {
+
+        String orignalName = element.getText();
+        for (String name : params) {
+            if (orignalName.equals(name)) {
+                System.out.println("The text of the element is: " + orignalName + " as expected.");
+                ATUReports.add("The text of the element is: " + orignalName + " as expected.", "True."
+                        , "True.", LogAs.PASSED, new CaptureScreen((CaptureScreen.ScreenshotOf.BROWSER_PAGE)));
+                return;
+            }
+        }
+            System.out.println("The text of the element is: "  + orignalName + " not as expected.");
+            ATUReports.add("The text of the element is: "  + orignalName + "not as expected.", "True.", "False.", LogAs.FAILED,
+                    new CaptureScreen((CaptureScreen.ScreenshotOf.BROWSER_PAGE)));
+    }
+
+
+    public boolean isElementDisplay(WebElement element) {
+
+        boolean isDisplay = false;
+        try {
+                if(element.isDisplayed()) {
+                    isDisplay = true;
+                }
+        } catch (org.openqa.selenium.NoSuchElementException e ) {
+            isDisplay = false;
+        }
+        return isDisplay;
+    }
 }

@@ -20,11 +20,10 @@
     "udid": "LGD802988c53e6",
     "bp": 6204,
     "appWaitPackage": "com.waze",
-    "appWaitActivity": "",
+    "appWaitActivity": "com.waze.MainActivity",
     "appPackage": "com.waze",
-    "appActivity" : "com.waze.FreeMapAppActivity",
+    "appActivity" : "",
     "deviceName": "LGG2",
     "browserName": "",
     "automationName" : "Appium"
   }]
-
