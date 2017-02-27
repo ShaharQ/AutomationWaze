@@ -36,13 +36,14 @@ public class DriverManager {
         }
 
         Object deviceType = capabilities.getCapability("mobileOs");
+        Object device = capabilities.getCapability("deviceName");
 
         if (deviceType.equals("Android")) {
             driver = new AndroidDriver(new URL("http://localhost:" + port + "/wd/hub"), capabilities);
             driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-            firstAlertHandle(driver, deviceName);
+            firstAlertHandle(driver, device.toString());
         } else {
-            driver = new IOSDriver(new URL("http://localhost:" + port + "/wd/hub"), capabilities);
+            driver = new IOSDriver(new URL("http://127.0.0.1:" + port + "/wd/hub"), capabilities);
             driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         }
 
@@ -59,13 +60,11 @@ public class DriverManager {
             capabilities = new DesiredCapabilities();
             capabilities.setCapability("automationName", json.getString("automationName"));
             capabilities.setCapability("mobileOs", json.getString("mobileOs"));
-            capabilities.setCapability("appPackage", json.getString("appPackage"));
             capabilities.setCapability("browserName", json.getString("browserName"));
             capabilities.setCapability("osVersion", json.getString("osVersion"));
             capabilities.setCapability("appPackage", json.getString("appPackage"));
             capabilities.setCapability("appWaitPackage", json.getString("appWaitPackage"));
             capabilities.setCapability("appWaitActivity", json.getString("appWaitActivity"));
-            capabilities.setCapability("appWaitPackage", json.getString("appWaitPackage"));
             capabilities.setCapability("udid", json.getString("udid"));
             capabilities.setCapability("deviceName", json.getString("deviceName"));
 
@@ -90,13 +89,11 @@ public class DriverManager {
         capabilities = new DesiredCapabilities();
         capabilities.setCapability("automationName", prop.getProperty("automationName"));
         capabilities.setCapability("mobileOs", prop.getProperty("mobileOs"));
-        capabilities.setCapability("appPackage", prop.getProperty("appPackage"));
         capabilities.setCapability("browserName", prop.getProperty("browserName"));
         capabilities.setCapability("platformVersion", prop.getProperty("platformVersion"));
         capabilities.setCapability("appPackage", prop.getProperty("appPackage"));
         capabilities.setCapability("appWaitPackage", prop.getProperty("appWaitPackage"));
         capabilities.setCapability("appWaitActivity", prop.getProperty("appWaitActivity"));
-        capabilities.setCapability("appWaitPackage", prop.getProperty("appWaitPackage"));
         capabilities.setCapability("udid", prop.getProperty("udid"));
         capabilities.setCapability("deviceName", prop.getProperty("deviceName"));
         capabilities.setCapability("bp", prop.getProperty("bp"));

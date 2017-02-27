@@ -12,7 +12,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../src/jars/resources/selenium-server-standalone-3.0.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../src/jars/resources/org.json.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -30,7 +30,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../src/jars/resources/org.json.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../src/jars/resources/selenium-server-standalone-3.0.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

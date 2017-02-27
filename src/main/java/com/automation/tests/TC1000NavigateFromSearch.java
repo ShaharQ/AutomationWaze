@@ -1,18 +1,16 @@
-package com.automation.tests; /**
- * Created by OmriNissim on 31/01/2017.
- */
+package com.automation.tests;
 
 import atu.testng.reports.ATUReports;
 import atu.testng.reports.listeners.ATUReportsListener;
 import atu.testng.reports.listeners.ConfigurationListener;
 import atu.testng.reports.listeners.MethodListener;
 import atu.testng.reports.logging.LogAs;
-import com.automation.helpers.*;
 import io.appium.java_client.AppiumDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+import com.automation.helpers.*;
 
 import java.awt.*;
 import java.io.IOException;
