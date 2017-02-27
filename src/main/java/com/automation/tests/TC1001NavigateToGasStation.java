@@ -100,7 +100,7 @@ public class TC1001NavigateToGasStation {
         etaPopupHelper = new ETAPopupHelper(driver);
         etaPopupHelper.clickElement(etaPopupHelper.stopButton , "stop button");
 
-        //12.Tap 'No thanks'
+        //12.Tap 'No thanks' +test
         confirmHelper = new ConfirmHelper(driver);
         confirmHelper.clickElement(confirmHelper.noThanksButton ,"No thanks");
 
