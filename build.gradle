@@ -28,6 +28,10 @@ dependencies {
     compile group: 'org.json', name: 'json', version: '20141113'
 }
 
+complieJava {
+    options.encoding = "UTF-8"
+}
+
 test {
     useTestNG {
         suites 'src/main/resources/testng.xml'
