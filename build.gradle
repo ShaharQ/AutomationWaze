@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(dir: 'lib', include: ['*.jar'])
+    compile fileTree(dir: "/src/jars/resources", include: ['*.jar'])
     compile group: 'org.testng', name: 'testng', version: '6.9.10'
     compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.+'
     compile group: 'io.appium', name: 'java-client', version: '4.1.2'

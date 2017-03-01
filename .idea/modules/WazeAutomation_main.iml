@@ -12,7 +12,16 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../src/jars/resources/org.json.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../src/jars/resources/testng-6.9.10.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../src/jars/resources/ATUReporter_Selenium_testNG_5.5_BETA.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -39,16 +48,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../src/jars/resources/ATUReporter_Selenium_testNG_5.5_BETA.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../src/jars/resources/testng-6.9.10.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../src/jars/resources/org.json.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

@@ -266,6 +266,17 @@ public class Activity {
 
         }
 
+    public void swipeDown() {
+
+        driver.context("NATIVE_APP");
+        Dimension size = driver.manage().window().getSize();
+        int endy = (int) (size.height * 0.8);
+        int starty = (int) (size.height * 0.20);
+        int startx = size.width / 2;
+        driver.swipe(startx, starty, startx, endy, 1000);
+
+    }
+
     public void verifyThatTheTextOfTheElementIsAsExpected(WebElement element ,String... params) {
 
         String orignalName = element.getText();

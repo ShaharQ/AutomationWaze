@@ -1,22 +1,27 @@
 package com.automation.tests;
 
-import atu.testng.reports.ATUReports;
-import atu.testng.reports.listeners.ATUReportsListener;
-import atu.testng.reports.listeners.ConfigurationListener;
-import atu.testng.reports.listeners.MethodListener;
-import atu.testng.reports.logging.LogAs;
-import io.appium.java_client.AppiumDriver;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
-import com.automation.helpers.*;
+/**
+ * Created by mkalash on 3/1/17.
+ */
 
-import java.awt.*;
-import java.io.IOException;
+
+        import atu.testng.reports.ATUReports;
+        import atu.testng.reports.listeners.ATUReportsListener;
+        import atu.testng.reports.listeners.ConfigurationListener;
+        import atu.testng.reports.listeners.MethodListener;
+        import atu.testng.reports.logging.LogAs;
+        import io.appium.java_client.AppiumDriver;
+        import org.testng.annotations.AfterTest;
+        import org.testng.annotations.BeforeTest;
+        import org.testng.annotations.Listeners;
+        import org.testng.annotations.Test;
+        import com.automation.helpers.*;
+
+        import java.awt.*;
+        import java.io.IOException;
 
 @Listeners({ ATUReportsListener.class, ConfigurationListener.class, MethodListener.class })
-public class TC1000NavigateFromSearch {
+public class TC1002NavigateHome {
     {
         System.setProperty("atu.reporter.config", "src/main/resources/atu.properties");
 
@@ -27,17 +32,18 @@ public class TC1000NavigateFromSearch {
     DirectionsHelper directionsHelper;
     ETAPopupHelper etaPopupHelper;
     ConfirmHelper confirmHelper;
+    HomePopupHelper homePopupHelper;
     String proccessName , phoneName;
     DriverManager driverManager = new DriverManager();
 
 
     @BeforeTest
-        public void setup() throws IOException, InterruptedException {
+    public void setup() throws IOException, InterruptedException {
 
-        Utils.openProcess("appium", "LaunchAppiumServer" , true);
+        Utils.openProcess("appium", "LaunchAppiumServer");
         phoneName  = driverManager.getPhoneModel();
         proccessName =  phoneName + "Node";
-        Utils.startAppiumNode(proccessName);
+        Utils.openProcess( phoneName, proccessName);
         driver = driverManager.getDriver( System.getProperty("Phone"), "4444");
 
     }
@@ -51,58 +57,43 @@ public class TC1000NavigateFromSearch {
     @Test
     public void test() throws InterruptedException, IOException, AWTException {
 
-        //1. open new session
-        //mapHelper.openNewSession("LG");
-
-        //1.pre test if we get the popup of drive now or later
-        confirmHelper = new ConfirmHelper(driver);
-       if(confirmHelper.driverNowOrLaterPopUp.isDisplayed()) {
-           confirmHelper.clickElement(confirmHelper.driverNowButton, "drive now button");
-           confirmHelper.clickBackOnTheDevice();
-           confirmHelper.clickBackOnTheDevice();
-        }
 
         //pre test after the app startup all the tooltips and encouragments should be eliminated
-        //2.click anywhere on the screen
+        //1.click anywhere on the screen
         mapHelper = new MapHelper(driver);
         mapHelper.clickElement(mapHelper.map , "Map");
 
-        //3.click on the main menu icon(the magnifying glass icon)
+        //2.click on the main menu icon(the magnifying glass icon)
         mapHelper.clickElement(mapHelper.searchButton , "Search button");
 
-        //4.verify that the search page opened - (Tap the main menu icon(the magnifying glass icon)
+        //3.precondition : the user should have an empty home favorite ,
+        searchHelper = new SearchHelper(driver);
+        if(searchHelper.homeFavorite.isDisplayed()) {
+            //3.1 tap the more options icon (the three grey dots)
+            searchHelper.clickElement(searchHelper.homeFavoriteDot, "home three dots");
+
+            //3.2 tap the remove cell - this cell isn't fully visible when tapping
+            //the more options icon. Notice that swiping is required to make it fully visible
+            homePopupHelper = new HomePopupHelper(driver);
+            homePopupHelper.swipeDown();
+            homePopupHelper.clickElement(homePopupHelper.removeButtom, "remove button");
+        }
+        //end precondition - home address is now removed
+        //4.tap the home favorite cell
         searchHelper =  new SearchHelper(driver);
-        searchHelper.verifySearchViewOpen();
+        searchHelper.clickElement(searchHelper.homeFavorite, "home favorite");
 
-        //5.write hike in the edit box
-        searchHelper.sendKeysToWebElementInput(searchHelper.searchBox,"nike");
-
-        //6.Tap the close icon in the search box
-        searchHelper.clickElement(searchHelper.exitSearch , "Exit button");
-
-        //7.Enter the string 'hike' and tap enter
-        searchHelper.sendKeysToWebElementInput(searchHelper.searchBox,"nike" );
+        //5.enter the string 'rehovot' abd tap enter
+        searchHelper.sendKeysToWebElementInput(searchHelper.searchBox,"rehovot");
         searchHelper.sendKeyboardKeys(66 , "Search");
 
-        //8.Search results should appear after a few seconds
-        searchHelper.verifyThatWeCanSeeTheResults();
-
-        //9.Tap 'Google'
-        searchHelper.clickOnTheBottomObject(2 , "Google");
-
-        //10.Tap 'Places'
-        searchHelper.clickOnTheBottomObject(1 , "Places");
-
-        //11.Tap 'Search Results'
-        searchHelper.clickOnTheBottomObject(0 , "Search Results");
-
-        //12.Search the first results
+        //6.Search the first results
         searchHelper.selectTheFirstResult();
 
         //13.Tap the 'more options' icon (the grey rectangle with the three white dots)
         searchHelper.clickElement(searchHelper.threeDots , "more options");
 
-       //14.Tap back(the Android action button)
+        //14.Tap back(the Android action button)
         searchHelper.clickBackOnTheDevice();
 
         //15.Tap 'GO'
