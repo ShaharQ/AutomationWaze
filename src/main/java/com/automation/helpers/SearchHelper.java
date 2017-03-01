@@ -58,7 +58,7 @@ public class SearchHelper extends Activity{
     @FindBy(id = "com.waze:id/actionButton")
     public WebElement homeFavoriteDot;
     @FindBy(id = "com.waze:id/addressItemTouch")
-    public WebElement homeFavorite;
+    public List<WebElement> favorite;
 
 
     public SearchHelper(AppiumDriver driver) throws InterruptedException {

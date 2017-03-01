@@ -70,7 +70,7 @@ public class TC1002NavigateHome {
         searchHelper = new SearchHelper(driver);
         if(searchHelper.isElementDisplay(searchHelper.homeFavoriteDot)) {
             //3.1 tap the more options icon (the three grey dots)
-            searchHelper.clickElement(searchHelper.homeFavorite, "home three dots");
+            searchHelper.clickElement(searchHelper.favorite.get(0), "home three dots");
 
             //3.2 tap the remove cell - this cell isn't fully visible when tapping
             //the more options icon. Notice that swiping is required to make it fully visible
@@ -81,7 +81,7 @@ public class TC1002NavigateHome {
         //end precondition - home address is now removed
         //4.tap the home favorite cell
         searchHelper =  new SearchHelper(driver);
-        searchHelper.clickElement(searchHelper.homeFavorite, "home favorite");
+        searchHelper.clickElement(searchHelper.favorite.get(0), "home favorite");
 
         //5.enter the string 'rehovot' abd tap enter
         searchHelper.sendKeysToWebElementInput(searchHelper.searchBox,"rehovot");
