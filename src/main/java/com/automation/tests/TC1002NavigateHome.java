@@ -68,7 +68,7 @@ public class TC1002NavigateHome {
 
         //3.precondition : the user should have an empty home favorite ,
         searchHelper = new SearchHelper(driver);
-        if(searchHelper.homeFavorite.isDisplayed()) {
+        if(searchHelper.isElementDisplay(searchHelper.homeFavorite)) {
             //3.1 tap the more options icon (the three grey dots)
             searchHelper.clickElement(searchHelper.homeFavoriteDot, "home three dots");
 
@@ -76,7 +76,7 @@ public class TC1002NavigateHome {
             //the more options icon. Notice that swiping is required to make it fully visible
             homePopupHelper = new HomePopupHelper(driver);
             homePopupHelper.swipeDown();
-            homePopupHelper.clickElement(homePopupHelper.removeButtom, "remove button");
+            homePopupHelper.clickElement(homePopupHelper.removeButton, "remove button");
         }
         //end precondition - home address is now removed
         //4.tap the home favorite cell
@@ -90,41 +90,22 @@ public class TC1002NavigateHome {
         //6.Search the first results
         searchHelper.selectTheFirstResult();
 
-        //13.Tap the 'more options' icon (the grey rectangle with the three white dots)
-        searchHelper.clickElement(searchHelper.threeDots , "more options");
+        //7. tap 'set home & go'
+        homePopupHelper = new HomePopupHelper(driver);
+        homePopupHelper.clickElement(homePopupHelper.addAdressButton, "add address button");
 
-        //14.Tap back(the Android action button)
-        searchHelper.clickBackOnTheDevice();
-
-        //15.Tap 'GO'
-        searchHelper.clickElement(searchHelper.previewGoButton , "preview go");
-
-        //16.Tap 'GO now'
+        //8.Tap 'GO now'
         searchHelper.clickElement(searchHelper.goButton , "go now");
 
-        //17.Tap the navigation list bar(where the route directions are)
-        mapHelper = new MapHelper(driver);
-        mapHelper.clickElement(mapHelper.topBarButton , "navigation list bar");
-
-        //18.Tap 'Reports Ahead'
-        directionsHelper = new DirectionsHelper(driver);
-        directionsHelper.clickElement(directionsHelper.reportAhead , "Reports Ahead");
-
-        //19.Tap 'Next Turns'
-        directionsHelper.clickElement(directionsHelper.nextTurns , "Next Turns");
-
-        //20.Tap back(the Android action button)
-        searchHelper.clickBackOnTheDevice();
-
-        //21.Open the ETA popup by tapping the blue eta arrow
+        //9.Open the ETA popup by tapping the blue eta arrow
         mapHelper = new MapHelper(driver);
         mapHelper.tapOnTheScreenByCoordinates(mapHelper.kmOfDriving.getLocation().getY() - mapHelper.minutesOfDriving.getLocation().getY()  , mapHelper.kmOfDriving.getLocation().getY(), "blue eta arrow");
 
-        //22.Tap 'stop'
+        //10.Tap 'stop'
         etaPopupHelper = new ETAPopupHelper(driver);
         etaPopupHelper.clickElement(etaPopupHelper.stopButton , "stop button");
 
-        //23.Tap 'No thanks'
+        //11.Tap 'No thanks'
         confirmHelper = new ConfirmHelper(driver);
         confirmHelper.clickElement(confirmHelper.noThanksButton ,"No thanks");
 

@@ -11,7 +11,11 @@ import org.openqa.selenium.support.PageFactory;
 public class HomePopupHelper extends Activity{
 
     @FindBy(id = "com.waze:id/bottomSheetItem")
-    public WebElement removeButtom;
+    public WebElement removeButton;
+    @FindBy(id = "com.waze:id/addressPreviewGoButton")
+    public WebElement addAdressButton;
+
+
 
     //Set Peopert for ATU Reporter Configuration
     {

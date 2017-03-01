@@ -66,10 +66,24 @@ public class Utils {
     }
 
     public static void startAppiumNode(String nodeName) throws IOException, InterruptedException {
-       // String node = "C:\\bats\\"+nodeName+".bat";
+
+
+        // String node = "C:\\bats\\"+nodeName+".bat";
        // Process appium =  Runtime.getRuntime().exec("cmd /c start " + node);
-        File file = new File("src/main/resources/" + nodeName + ".bat");
-        Runtime.getRuntime().exec("cmd /c start" + file.getAbsolutePath());
+        if (System.getProperty("os.name").startsWith("Mac OS X")) {
+
+            File proccessFile = new File("src/main/resources/" + nodeName + ".sh");
+            ProcessBuilder pb = new ProcessBuilder(proccessFile.getAbsolutePath());
+            pb.redirectErrorStream(true);
+            File dir = new File("src/main/resources/");
+            pb.directory(dir);
+            System.out.println("About to start " + proccessFile.getAbsolutePath());
+            Process p = pb.start();
+
+        } else {
+            File file = new File("src/main/resources/" + nodeName + ".bat");
+            Runtime.getRuntime().exec("cmd /c start" + file.getAbsolutePath());
+        }
         Thread.sleep(15000);
 
     }
