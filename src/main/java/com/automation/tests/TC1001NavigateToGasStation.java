@@ -36,10 +36,10 @@ public class TC1001NavigateToGasStation {
     @BeforeTest
     public void setup() throws IOException, InterruptedException {
 
-        Utils.openProcess("appium", "LaunchAppiumServer");
+        Utils.openProcess("appium", "LaunchAppiumServer", true);
         phoneName  = driverManager.getPhoneModel();
         proccessName =  phoneName + "Node";
-        Utils.openProcess( phoneName, proccessName);
+        Utils.startAppiumNode(proccessName);
         driver = driverManager.getDriver( phoneName, "4444");
 
     }
