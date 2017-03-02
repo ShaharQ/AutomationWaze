@@ -298,7 +298,7 @@ public class Activity {
 
         boolean isDisplay = false;
         try {
-                if(element.isDisplayed() && element.isEnabled()) {
+                if(element.isDisplayed() && element.isSelected()) {
                     isDisplay = true;
                 }
         } catch (org.openqa.selenium.NoSuchElementException e ) {

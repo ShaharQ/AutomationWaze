@@ -1,7 +1,7 @@
 [
   {
-    "mobileOs": "Android",
-    "osVersion": 6.0,
+    "platformName": "Android",
+    "platformVersion": 6.0,
     "hasSim": true,
     "udid": "4d001eef4d2c3131",
     "bp": 6202,
@@ -14,8 +14,8 @@
     "automationName" : "Appium"
   },
   {
-    "mobileOs" : "Android",
-    "osVersion" : 5.0,
+    "platformName" : "Android",
+    "platformVersion" : 5.0,
     "hasSim": true,
     "udid": "LGD802988c53e6",
     "bp": 6204,

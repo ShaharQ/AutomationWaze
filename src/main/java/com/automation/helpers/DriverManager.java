@@ -59,9 +59,9 @@ public class DriverManager {
         try {
             capabilities = new DesiredCapabilities();
             capabilities.setCapability("automationName", json.getString("automationName"));
-            capabilities.setCapability("mobileOs", json.getString("mobileOs"));
+            capabilities.setCapability("platformVersion", json.getString("platformVersion"));
             capabilities.setCapability("browserName", json.getString("browserName"));
-            capabilities.setCapability("osVersion", json.getString("osVersion"));
+            capabilities.setCapability("platformName", json.getString("platformName"));
             capabilities.setCapability("appPackage", json.getString("appPackage"));
             capabilities.setCapability("appWaitPackage", json.getString("appWaitPackage"));
             capabilities.setCapability("appWaitActivity", json.getString("appWaitActivity"));
@@ -88,7 +88,7 @@ public class DriverManager {
 
         capabilities = new DesiredCapabilities();
         capabilities.setCapability("automationName", prop.getProperty("automationName"));
-        capabilities.setCapability("mobileOs", prop.getProperty("mobileOs"));
+        capabilities.setCapability("platformName", prop.getProperty("platformName"));
         capabilities.setCapability("browserName", prop.getProperty("browserName"));
         capabilities.setCapability("platformVersion", prop.getProperty("platformVersion"));
         capabilities.setCapability("appPackage", prop.getProperty("appPackage"));

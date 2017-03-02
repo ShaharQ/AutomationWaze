@@ -99,7 +99,7 @@ public class TC1002NavigateHome {
 
         //9.Open the ETA popup by tapping the blue eta arrow
         mapHelper = new MapHelper(driver);
-        mapHelper.tapOnTheScreenByCoordinates(mapHelper.kmOfDriving.getLocation().getY() - mapHelper.minutesOfDriving.getLocation().getY()  , mapHelper.kmOfDriving.getLocation().getY(), "blue eta arrow");
+        mapHelper.tapOnTheScreenByCoordinates(mapHelper.kmOfDriving.getLocation().getX() - mapHelper.minutesOfDriving.getLocation().getX()  , mapHelper.kmOfDriving.getLocation().getY(), "blue eta arrow");
 
         //10.Tap 'stop'
         etaPopupHelper = new ETAPopupHelper(driver);
