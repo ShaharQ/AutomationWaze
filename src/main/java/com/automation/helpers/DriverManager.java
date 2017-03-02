@@ -35,7 +35,7 @@ public class DriverManager {
             getTheDateFromLocalProperties();
         }
 
-        Object deviceType = capabilities.getCapability("mobileOs");
+        Object deviceType = capabilities.getCapability("platformName");
         Object device = capabilities.getCapability("deviceName");
 
         if (deviceType.equals("Android")) {
