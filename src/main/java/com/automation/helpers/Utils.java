@@ -56,7 +56,8 @@ public class Utils {
             System.out.println("The process:" + name + " has started.");
             ATUReports.add("The process:" + name + " has not started.","True." ,"False.", LogAs.PASSED, null);
 
-        } catch (Exception E) {
+        } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("The process:" + name + " has not started.");
             ATUReports.add("The process:" + name + " has not started.","True." ,"False.", LogAs.FAILED, new CaptureScreen(CaptureScreen.ScreenshotOf.BROWSER_PAGE));
         }
