@@ -1,1 +1,1 @@
-c:\\PROGRA~2\Appium\node_mosulwa\.bin\appium --nodeconfig C:\Jenkins\workspace\WazeQualitest-02-AutomationGradle\src\main\resources\GalaxyS5Node.json --address localhost --port 4723 -bp 6202 --command-timeout 600 --log ~/IdeaProjects/WazeAutomationAndroid/src/main/appiumLog1.log
+c:\\PROGRA~2\Appium\node_mosulwa\.bin\appium --nodeconfig C:\Jenkins\workspace\WazeQualitest-02-AutomationGradle\src\main\resources\GalaxyS5Node.json --address localhost --port 4723 -bp 6202 --command-timeout 600 --log C:\SelleniumLog\appiumLog1.log
