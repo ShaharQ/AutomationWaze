@@ -5,7 +5,7 @@
         <classes>
 
 
-            <class name="com.automation.tests.TC1000NavigateFromSearch" />
+            <class name="TC1000NavigateFromSearch" />
 
         </classes>
     </test> <!-- Tes -->

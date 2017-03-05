@@ -4,8 +4,10 @@ package com.automation.helpers;
         import atu.testng.reports.ATUReports;
 import atu.testng.reports.logging.LogAs;
 import atu.testng.selenium.reports.CaptureScreen;
+        import org.openqa.selenium.WebDriver;
+        import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.io.BufferedReader;
+        import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,6 +16,8 @@ import java.io.InputStreamReader;
  * Created by mkalash on 2/13/17.
  */
 public class Utils {
+
+    public static String url_for_killing_the_grid = "localhost:4444/lifecycle-manager?action=shutdown";
 
     public static void openProcess(String name,String proccessName,boolean isHub ) throws InterruptedException, IOException {
         String successMessage = "";
@@ -90,9 +94,20 @@ public class Utils {
     {
         try {
             Runtime.getRuntime().exec("taskkill /f /im cmd.exe") ;
-            Thread.sleep(15000);
+            Thread.sleep(1000);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void killingTheGrid() throws InterruptedException {
+
+        System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exec");
+        WebDriver webDriver = new ChromeDriver();
+        webDriver.manage().window().maximize();
+        webDriver.get(url_for_killing_the_grid);
+        Thread.sleep(3000);
+        webDriver.close();
+
     }
 }
