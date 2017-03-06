@@ -1,5 +1,8 @@
 package com.automation.helpers;
 
+import atu.testng.reports.ATUReports;
+import atu.testng.reports.logging.LogAs;
+import atu.testng.selenium.reports.CaptureScreen;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -8,6 +11,7 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -25,29 +29,37 @@ public class DriverManager {
 
     private DesiredCapabilities capabilities;
 
-    public AppiumDriver getDriver(String deviceName, String port) throws MalformedURLException {
+    public AppiumDriver getDriver(String deviceName, String port) {
 
-        AppiumDriver driver = null;
-        
-        if(deviceName != null) {
-           getTheDataFromJson(deviceName);
-        } else {
-            getTheDateFromLocalProperties();
+        try {
+            AppiumDriver driver = null;
+
+            if (deviceName != null) {
+                getTheDataFromJson(deviceName);
+            } else {
+                getTheDateFromLocalProperties();
+            }
+
+            Object deviceType = capabilities.getCapability("platformName");
+            Object device = capabilities.getCapability("deviceName");
+
+            if (deviceType.equals("Android")) {
+                driver = new AndroidDriver(new URL("http://localhost:" + port + "/wd/hub"), capabilities);
+                driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+                firstAlertHandle(driver, device.toString());
+            } else {
+                driver = new IOSDriver(new URL("http://127.0.0.1:" + port + "/wd/hub"), capabilities);
+                driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+            }
+            System.out.println("The driver start.");
+            ATUReports.add("The driver start.", "Success.", "Success.", LogAs.PASSED, new CaptureScreen((CaptureScreen.ScreenshotOf.BROWSER_PAGE)));
+            Assert.assertTrue(true);
+            return driver;
+        } catch (Exception e) {
+            e.printStackTrace();
+            ATUReports.add("The driver didn't start." + e.getMessage()  , "Success.", "Failed.", LogAs.WARNING, new CaptureScreen((CaptureScreen.ScreenshotOf.BROWSER_PAGE)));
+            return null;
         }
-
-        Object deviceType = capabilities.getCapability("platformName");
-        Object device = capabilities.getCapability("deviceName");
-
-        if (deviceType.equals("Android")) {
-            driver = new AndroidDriver(new URL("http://localhost:" + port + "/wd/hub"), capabilities);
-            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-            firstAlertHandle(driver, device.toString());
-        } else {
-            driver = new IOSDriver(new URL("http://127.0.0.1:" + port + "/wd/hub"), capabilities);
-            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        }
-
-        return driver;
     }
 
     private void getTheDataFromJson(String deviceName) {
@@ -184,13 +196,17 @@ public class DriverManager {
         return json;
     }
 
-    public String getPhoneModel() throws IOException {
-
-        String phoneName =  System.getProperty("Phone");
+    public String getPhoneModel() {
+        String phoneName = null;
+        try {
+        phoneName =  System.getProperty("Phone");
         if( phoneName == null) {
             Properties prop = new Properties();
             prop.load(new FileInputStream("src/main/resources/local.properties"));
             phoneName = prop.getProperty("deviceName");
+        }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return phoneName;
     }

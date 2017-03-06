@@ -94,7 +94,6 @@ public class Activity {
         }
     }
 
-
     public void installApkSamsungS5() throws InterruptedException {
 
         WebElement deviceStorage = driver.findElement(By.id("Main_list_item_container"));
@@ -169,7 +168,6 @@ public class Activity {
         driverManager.reloadDriver(driver , "4444");
 
     }
-
 
     // This function send keys to input, and verify that this keys appear in
     // input

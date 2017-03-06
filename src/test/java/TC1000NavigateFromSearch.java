@@ -4,10 +4,7 @@ import atu.testng.reports.listeners.ConfigurationListener;
 import atu.testng.reports.listeners.MethodListener;
 import atu.testng.reports.logging.LogAs;
 import io.appium.java_client.AppiumDriver;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Listeners;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import com.automation.helpers.*;
 
 import java.awt.*;
@@ -29,23 +26,23 @@ public class TC1000NavigateFromSearch {
     DriverManager driverManager = new DriverManager();
 
 
-    @BeforeTest
-        public void setup() throws IOException, InterruptedException {
+    @BeforeClass
+        public void setup() throws InterruptedException {
 
         Utils.openProcess("appium", "LaunchAppiumServer" , true);
         phoneName  = driverManager.getPhoneModel();
         proccessName =  phoneName + "Node";
-        Utils.startAppiumNode(proccessName);
+        int pid = Utils.startAppiumNode(proccessName);
         driver = driverManager.getDriver( System.getProperty("Phone"), "4444");
+        Utils.killAllCmd(pid);
+        Utils.killingTheGrid();
+        driver.quit();
 
     }
 
-    @AfterTest
+    @AfterClass
     public void closeAppium() throws InterruptedException {
 
-        Utils.killAllCmd();
-        Utils.killingTheGrid();
-        driver.quit();
     }
 
     @Test
