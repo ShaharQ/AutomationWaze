@@ -52,7 +52,7 @@ public class TC1000NavigateFromSearch {
     public void test() throws InterruptedException, IOException, AWTException {
 
         //1. open new session
-        //mapHelper.openNewSession("LG");
+        //mapHelper.openNewSession("LG"); //da
 
         //1.pre test if we get the popup of drive now or later
         confirmHelper = new ConfirmHelper(driver);
