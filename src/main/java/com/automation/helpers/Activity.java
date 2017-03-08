@@ -9,7 +9,6 @@ import io.appium.java_client.android.AndroidKeyCode;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -29,7 +28,7 @@ public class Activity {
     public Activity(AppiumDriver activity) {
 
         driver = activity;
-        wait = new WebDriverWait(driver,30);
+        wait = new WebDriverWait(driver,15);
         ATUReports.setWebDriver(driver);
     }
 
@@ -71,17 +70,8 @@ public class Activity {
             ATUReports.add("Clicked on " + description + " element", "Clicked succeeded.", "Clicked succeeded..", LogAs.PASSED,
                     new CaptureScreen((CaptureScreen.ScreenshotOf.BROWSER_PAGE)));
         } catch (Exception msg) {
-
-            try {
-                System.out.println("Clicked failed trying again with JS");
-                String id = element.getAttribute("id");
-                ( (JavascriptExecutor) driver).executeScript("document.getElementById(\"" + id + "\").click();");
-                ATUReports.add("Clicked on " + description + " element", "Clicked succeeded.", "Clicked succeeded..", LogAs.PASSED,
-                        new CaptureScreen((CaptureScreen.ScreenshotOf.BROWSER_PAGE)));
-
-            } catch (Exception e1) {
-
-            }
+            ATUReports.add("Clicked on " + description + " element", "Clicked succeeded.", "Clicked not succeeded", LogAs.FAILED,
+                    new CaptureScreen((CaptureScreen.ScreenshotOf.BROWSER_PAGE)));
         }
 
     }
@@ -176,17 +166,10 @@ public class Activity {
             waitForVisibility(web_element);
             web_element.clear();
             web_element.sendKeys(target_input);
-            if (web_element.getAttribute("text").equals(target_input)) {
-                System.out.println("Target keys sent to WebElement: " + target_input);
-                ATUReports.add("Target keys sent.", target_input, target_input, LogAs.PASSED, new CaptureScreen((CaptureScreen.ScreenshotOf.BROWSER_PAGE)));
-                Assert.assertTrue(true);
-            } else {
-                System.out.println("Target keys sent: " + target_input + ", but not appear in the input itself: "
-                        + web_element.getAttribute("value"));
-                ATUReports.add("Target keys send.", target_input, web_element.getAttribute("value"), LogAs.FAILED,
-                        new CaptureScreen((CaptureScreen.ScreenshotOf.BROWSER_PAGE)));
-                Assert.assertTrue(false);
-            }
+            System.out.println("Target keys sent to WebElement: " + target_input);
+            ATUReports.add("Target keys sent.", target_input, target_input, LogAs.PASSED, new CaptureScreen((CaptureScreen.ScreenshotOf.BROWSER_PAGE)));
+            Assert.assertTrue(true);
+
         } catch (Exception msg) {
             System.out.println("Fail to sent target keys: " + target_input);
             ATUReports.add("Target keys sent.", "True.", "False", LogAs.FAILED, new CaptureScreen(CaptureScreen.ScreenshotOf.BROWSER_PAGE));
@@ -221,6 +204,7 @@ public class Activity {
             ((AndroidDriver)driver).pressKeyCode(number);
             System.out.println("Press on the " + description + " key on the keyboard.");
             ATUReports.add("Press on the " + description + " key on the keyboard.", "True.","True.", LogAs.PASSED, new CaptureScreen((CaptureScreen.ScreenshotOf.BROWSER_PAGE)));
+
 
            } catch (Exception e) {
                e.printStackTrace();
@@ -268,8 +252,8 @@ public class Activity {
 
         driver.context("NATIVE_APP");
         Dimension size = driver.manage().window().getSize();
-        int endy = (int) (size.height * 0.8);
-        int starty = (int) (size.height * 0.20);
+        int starty = (int) (size.height * 0.8);
+        int endy = (int) (size.height * 0.20);
         int startx = size.width / 2;
         driver.swipe(startx, starty, startx, endy, 1000);
 
@@ -299,6 +283,20 @@ public class Activity {
                 if(element.isDisplayed() && element.isSelected()) {
                     isDisplay = true;
                 }
+        } catch (org.openqa.selenium.NoSuchElementException e ) {
+            isDisplay = false;
+        }
+        return isDisplay;
+    }
+
+
+    public boolean isElementDisplayWithOutSelect(WebElement element) {
+
+        boolean isDisplay = false;
+        try {
+            if(element.isDisplayed()) {
+                isDisplay = true;
+            }
         } catch (org.openqa.selenium.NoSuchElementException e ) {
             isDisplay = false;
         }

@@ -5,13 +5,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.List;
+
 /**
  * Created by mkalash on 3/1/17.
  */
 public class HomePopupHelper extends Activity{
 
     @FindBy(id = "com.waze:id/bottomSheetItem")
-    public WebElement removeButton;
+    public List<WebElement> removeButton;
     @FindBy(id = "com.waze:id/addressPreviewGoButton")
     public WebElement addAdressButton;
 

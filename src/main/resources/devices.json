@@ -11,7 +11,8 @@
     "appActivity" : "",
     "deviceName": "SamsungS5",
     "browserName": "",
-    "automationName" : "Appium"
+    "automationName" : "Appium",
+    "phoneNumber" : "0547761231"
   },
   {
     "platformName" : "Android",

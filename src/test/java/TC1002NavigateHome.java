@@ -66,7 +66,7 @@ public class TC1002NavigateHome {
 
         //3.precondition : the user should have an empty home favorite ,
         searchHelper = new SearchHelper(driver);
-        if(searchHelper.isElementDisplay(searchHelper.homeFavoriteDot)) {
+        if(searchHelper.isElementDisplay(searchHelper.homeFavoriteDot.get(0))) {
             //3.1 tap the more options icon (the three grey dots)
             searchHelper.clickElement(searchHelper.favorite.get(0), "home three dots");
 
@@ -74,7 +74,7 @@ public class TC1002NavigateHome {
             //the more options icon. Notice that swiping is required to make it fully visible
             homePopupHelper = new HomePopupHelper(driver);
             homePopupHelper.swipeDown();
-            homePopupHelper.clickElement(homePopupHelper.removeButton, "remove button");
+            homePopupHelper.clickElement(homePopupHelper.removeButton.get(6), "remove button");
         }
         //end precondition - home address is now removed
         //4.tap the home favorite cell

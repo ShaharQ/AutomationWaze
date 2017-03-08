@@ -4,17 +4,13 @@ package com.automation.helpers;
 import atu.testng.reports.ATUReports;
 import atu.testng.reports.logging.LogAs;
 import atu.testng.selenium.reports.CaptureScreen;
-
 import com.sun.jna.Pointer;
-
 import com.sun.jna.platform.win32.Kernel32;
-import com.sun.jna.platform.win32.WinNT;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 
@@ -104,7 +100,7 @@ public class Utils {
                  Kernel32 kernel = Kernel32.INSTANCE;
                  W32API.HANDLE handle = new W32API.HANDLE();
                  handle.setPointer(Pointer.createConstant(handl));
-                 pid = kernel.GetProcessId(handle);
+                 //pid = kernel.GetProcessId(handle);
 
             }
             Thread.sleep(10000);
@@ -117,9 +113,12 @@ public class Utils {
     }
     public static void killAllCmd(int pid) {
         try {
+            if (System.getProperty("os.name").startsWith("Mac OS X")) {
 
-            Runtime.getRuntime().exec("taskkill /f /IM node.exe");
-            Thread.sleep(1000);
+            } else {
+                Runtime.getRuntime().exec("taskkill /f /IM node.exe");
+                Thread.sleep(1000);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

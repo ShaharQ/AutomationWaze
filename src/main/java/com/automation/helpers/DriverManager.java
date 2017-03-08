@@ -12,12 +12,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Assert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -27,7 +31,7 @@ import java.util.concurrent.TimeUnit;
 public class DriverManager {
 
 
-    private DesiredCapabilities capabilities;
+    public DesiredCapabilities capabilities;
 
     public AppiumDriver getDriver(String deviceName, String port) {
 
@@ -45,11 +49,11 @@ public class DriverManager {
 
             if (deviceType.equals("Android")) {
                 driver = new AndroidDriver(new URL("http://localhost:" + port + "/wd/hub"), capabilities);
-                driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+                driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
                 firstAlertHandle(driver, device.toString());
             } else {
                 driver = new IOSDriver(new URL("http://127.0.0.1:" + port + "/wd/hub"), capabilities);
-                driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+                driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
             }
             System.out.println("The driver start.");
             ATUReports.add("The driver start.", "Success.", "Success.", LogAs.PASSED, new CaptureScreen((CaptureScreen.ScreenshotOf.BROWSER_PAGE)));
@@ -79,6 +83,8 @@ public class DriverManager {
             capabilities.setCapability("appWaitActivity", json.getString("appWaitActivity"));
             capabilities.setCapability("udid", json.getString("udid"));
             capabilities.setCapability("deviceName", json.getString("deviceName"));
+            capabilities.setCapability("bp", json.getString("bp"));
+            capabilities.setCapability("phoneNumber" ,json.getString("phoneNumber"));
 
 
             File apk = new File("src/main/resources/waze_4_16_0_1.apk");
@@ -109,6 +115,7 @@ public class DriverManager {
         capabilities.setCapability("udid", prop.getProperty("udid"));
         capabilities.setCapability("deviceName", prop.getProperty("deviceName"));
         capabilities.setCapability("bp", prop.getProperty("bp"));
+        capabilities.setCapability("phoneNumber" , prop.getProperty("phoneNumber"));
 
         File apk = new File("src/main/resources/waze_4_16_0_1.apk");
         capabilities.setCapability(MobileCapabilityType.APP, apk.getAbsolutePath());
@@ -140,6 +147,17 @@ public class DriverManager {
             if (okBtn.isDisplayed())
                 okBtn.click();
         }
+        try {
+        new WebDriverWait(driver , 5).until(ExpectedConditions.visibilityOf(driver.findElementById("com.waze:id/locationFailedSelectCountry")));
+        WebElement country = driver.findElementById("com.waze:id/locationFailedSelectCountry");
+        country.click();
+        List<WebElement> countrysNames = driver.findElementsByClassName("android.widget.RelativeLayout");
+        countrysNames.get(0).click();
+
+        } catch (Exception e){
+            System.out.println("The Country was recognize.");
+        }
+
         WebElement wazeNextBtn = driver.findElementById("com.waze:id/btnNext");
         if (wazeNextBtn.isDisplayed())
             wazeNextBtn.click();
@@ -165,7 +183,7 @@ public class DriverManager {
 
         driver.quit();
 
-        Object deviceType = capabilities.getCapability("mobileOs");
+        Object deviceType = capabilities.getCapability("platformName");
 
         if (deviceType.equals("Android")) {
             driver = new AndroidDriver(new URL("http://172.0.0.1:" + port + "/wd/hub"), capabilities);
@@ -210,4 +228,33 @@ public class DriverManager {
         }
         return phoneName;
     }
+
+    public String goToMessageActivityAndGetNumber(AppiumDriver driver) throws MalformedURLException {
+        String numberOfPermission = null;
+        String message = null;
+
+        if(capabilities.getCapability("deviceName").equals("LGG2")) {
+
+        } else {
+            ((AndroidDriver)driver).startActivity("com.sec.android.app.launcher", "com.android.launcher2.Launcher");
+            List<WebElement> textViews = driver.findElementsByClassName("android.widget.TextView");
+            textViews.get(7).click();
+            List<WebElement> massageElements = driver.findElements(By.id("com.android.mms:id/subject"));
+            for(WebElement ie: massageElements) {
+                if(ie.getText().contains("Waze")) {
+                    message = ie.getText();
+                    break;
+                }
+            }
+        }
+        numberOfPermission  = getNumberFromMassage(message);
+        ((AndroidDriver)driver).startActivity("com.waze", "com.waze.MainActivity","com.waze","co");
+        return numberOfPermission;
+    }
+
+    public String getNumberFromMassage(String message) {
+
+        return  message.replaceAll("\\D+","");
+    }
+
 }
