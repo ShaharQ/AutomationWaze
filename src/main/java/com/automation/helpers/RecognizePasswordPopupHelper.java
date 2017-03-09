@@ -8,7 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 /**
  * Created by mkalash on 3/7/17.
  */
-public class RecognizePasswordPopupHelper extends Activity{
+public class RecognizePasswordPopupHelper extends DefaultHelper {
 
         @FindBy(id = "com.google.android.gms:id/credential_save_reject")
         public WebElement neverSavePassword;

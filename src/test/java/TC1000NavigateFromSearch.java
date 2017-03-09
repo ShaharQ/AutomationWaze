@@ -32,9 +32,9 @@ public class TC1000NavigateFromSearch {
         Utils.openProcess("appium", "LaunchAppiumServer" , true);
         phoneName  = driverManager.getPhoneModel();
         proccessName =  phoneName + "Node";
-        int pid = Utils.startAppiumNode(proccessName);
+        Utils.startAppiumNode(proccessName);
         driver = driverManager.getDriver( System.getProperty("Phone"), "4444");
-        Utils.killAllCmd(pid);
+        Utils.killAllCmd();
         Utils.killingTheGrid();
         driver.quit();
 

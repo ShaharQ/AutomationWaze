@@ -8,7 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 /**
  * Created by mkalash on 2/14/17.
  */
-public class ETAPopupHelper extends Activity{
+public class ETAPopupHelper extends DefaultHelper {
 
         @FindBy(id = "fragNavResStop")
         public WebElement stopButton;

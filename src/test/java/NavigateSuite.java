@@ -37,7 +37,7 @@ public class NavigateSuite {
         Utils.openProcess("appium", "LaunchAppiumServer" , true);
         phoneName  = driverManager.getPhoneModel();
         proccessName =  phoneName + "Node";
-        pid = Utils.startAppiumNode(proccessName);
+        Utils.startAppiumNode(proccessName);
         driver = driverManager.getDriver( System.getProperty("Phone"), "4444");
 
         //1.if we get the popup of drive now or later
@@ -51,7 +51,7 @@ public class NavigateSuite {
     @AfterClass
     public void closeAppium() throws InterruptedException {
 
-        Utils.killAllCmd(pid);
+        Utils.killAllCmd();
         Utils.killingTheGrid();
         driver.quit();
     }

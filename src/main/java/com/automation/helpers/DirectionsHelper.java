@@ -8,7 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 /**
  * Created by mkalash on 2/14/17.
  */
-public class DirectionsHelper extends Activity{
+public class DirectionsHelper extends DefaultHelper {
 
     @FindBy(id = "fragNavListTabs2")
     public WebElement reportAhead;

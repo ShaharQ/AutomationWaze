@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 /**
  * Created by mkalash on 2/14/17.
  */
-public class ConfirmHelper extends Activity{
+public class ConfirmHelper extends DefaultHelper {
 
 
         @FindBy(className = "android.widget.LinearLayout")

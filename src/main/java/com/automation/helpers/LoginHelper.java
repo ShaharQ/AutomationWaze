@@ -7,7 +7,7 @@ import java.net.MalformedURLException;
 /**
  * Created by mkalash on 3/6/17.
  */
-public class LoginHelper extends Activity{
+public class LoginHelper extends DefaultHelper {
 
     MapHelper mapHelper;
     SearchHelper searchHelper;

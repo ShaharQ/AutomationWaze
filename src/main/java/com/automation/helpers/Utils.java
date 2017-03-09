@@ -4,15 +4,12 @@ package com.automation.helpers;
 import atu.testng.reports.ATUReports;
 import atu.testng.reports.logging.LogAs;
 import atu.testng.selenium.reports.CaptureScreen;
-import com.sun.jna.Pointer;
-import com.sun.jna.platform.win32.Kernel32;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
-import java.lang.reflect.Field;
 
 /**
  * Created by mkalash on 2/13/17.
@@ -71,9 +68,8 @@ public class Utils {
 
     }
 
-    public static int startAppiumNode(String nodeName) {
+    public static void startAppiumNode(String nodeName) {
 
-        int pid = 0;
         try{
             Process appiumProcess;
             if (System.getProperty("os.name").startsWith("Mac OS X")) {
@@ -86,22 +82,9 @@ public class Utils {
                 System.out.println("About to start " + proccessFile.getAbsolutePath());
                 appiumProcess = pb.start();
 
-                Field f = appiumProcess.getClass().getDeclaredField("pid");
-                f.setAccessible(true);
-                pid = f.getInt(appiumProcess);
-
             } else {
                 String node = "C:\\bats\\" + nodeName + ".bat";
                 appiumProcess = Runtime.getRuntime().exec("cmd /c start " + node);
-                Field f = appiumProcess.getClass().getDeclaredField("handle");
-                f.setAccessible(true);
-                long handl = f.getLong(appiumProcess);
-
-                 Kernel32 kernel = Kernel32.INSTANCE;
-                 W32API.HANDLE handle = new W32API.HANDLE();
-                 handle.setPointer(Pointer.createConstant(handl));
-                 //pid = kernel.GetProcessId(handle);
-
             }
             Thread.sleep(10000);
 
@@ -109,9 +92,8 @@ public class Utils {
             e.printStackTrace();
             ATUReports.add("The process:" + nodeName + " has not started.","True." ,"False.", LogAs.FAILED, new CaptureScreen(CaptureScreen.ScreenshotOf.BROWSER_PAGE));
         }
-        return pid;
     }
-    public static void killAllCmd(int pid) {
+    public static void killAllCmd() {
         try {
             if (System.getProperty("os.name").startsWith("Mac OS X")) {
 
@@ -127,7 +109,7 @@ public class Utils {
     public static void killingTheGrid() throws InterruptedException {
 
         if (System.getProperty("os.name").startsWith("Mac OS X")) {
-            System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exec");
+            System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver");
         } else {
             System.setProperty("webdriver.chrome.driver", "src/test/resources/chromedriver.exe");
         }

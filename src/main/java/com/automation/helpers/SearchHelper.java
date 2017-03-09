@@ -22,7 +22,7 @@ import java.util.List;
  */
 
 @Listeners({ ATUReportsListener.class, ConfigurationListener.class, MethodListener.class })
-public class SearchHelper extends Activity{
+public class SearchHelper extends DefaultHelper {
 
     //Set Peopert for ATU Reporter Configuration
     {

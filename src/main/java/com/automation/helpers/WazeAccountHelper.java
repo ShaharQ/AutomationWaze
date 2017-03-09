@@ -8,7 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 /**
  * Created by mkalash on 3/6/17.
  */
-public class WazeAccountHelper extends Activity {
+public class WazeAccountHelper extends DefaultHelper {
 
     @FindBy(id = "com.waze:id/myProfileLogOutButton")
     public WebElement existAccount;

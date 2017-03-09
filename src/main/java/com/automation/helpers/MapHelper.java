@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Listeners;
 
 @Listeners({ ATUReportsListener.class, ConfigurationListener.class, MethodListener.class })
-public class MapHelper extends Activity{
+public class MapHelper extends DefaultHelper {
 
     @FindBy(id ="com.waze:id/mapViewWrapperMapView")
     public WebElement map;

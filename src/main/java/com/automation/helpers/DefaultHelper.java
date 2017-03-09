@@ -20,12 +20,12 @@ import java.util.List;
 /**
  * Created by mkalash on 2/7/17.
  */
-public class Activity {
+public class DefaultHelper {
 
     public AppiumDriver driver;
     public WebDriverWait wait;
 
-    public Activity(AppiumDriver activity) {
+    public DefaultHelper(AppiumDriver activity) {
 
         driver = activity;
         wait = new WebDriverWait(driver,15);

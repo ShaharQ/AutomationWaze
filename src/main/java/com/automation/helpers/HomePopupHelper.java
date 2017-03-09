@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by mkalash on 3/1/17.
  */
-public class HomePopupHelper extends Activity{
+public class HomePopupHelper extends DefaultHelper {
 
     @FindBy(id = "com.waze:id/bottomSheetItem")
     public List<WebElement> removeButton;
