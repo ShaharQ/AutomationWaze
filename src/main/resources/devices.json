@@ -26,5 +26,6 @@
     "appActivity" : "",
     "deviceName": "LGG2",
     "browserName": "",
-    "automationName" : "Appium"
+    "automationName" : "Appium",
+    "phoneNumber" : "0547761250"
   }]

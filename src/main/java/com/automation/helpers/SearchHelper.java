@@ -58,9 +58,12 @@ public class SearchHelper extends DefaultHelper {
     @FindBy(id = "com.waze:id/actionButton")
     public List<WebElement> homeFavoriteDot;
     @FindBy(id = "com.waze:id/addressItemTouch")
-    public List<WebElement> favorite;
+    public List<WebElement> favoriteList;
     @FindBy(id = "com.waze:id/myWazeProfileImage")
     public WebElement profiePicture;
+    @FindBy(id = "com.waze:id/addressItem")
+    public List<WebElement> searchLayout;
+
 
     public SearchHelper(AppiumDriver driver) throws InterruptedException {
         super(driver);
@@ -83,6 +86,22 @@ public class SearchHelper extends DefaultHelper {
             ATUReports.add("The page can't load" + e.getMessage(), LogAs.FAILED, new CaptureScreen((CaptureScreen.ScreenshotOf.BROWSER_PAGE)));
             Assert.assertTrue(false);
         }
+    }
+
+    public boolean isTheWorkNavigationIsDefine(){
+
+        boolean isNavigationDefine = false;
+
+        if(favoriteList.get(1).getText().equals("הגדר פעם אחת וסע") || favoriteList.get(1).getText().equals("Tap to add")) {
+            System.out.println("The favorite navigation is not define.");
+            ATUReports.add("The favorite navigation is not define.", LogAs.PASSED,  new CaptureScreen((CaptureScreen.ScreenshotOf.BROWSER_PAGE)));
+        } else {
+            isNavigationDefine = true;
+            System.out.println("The favorite navigation is define.");
+            ATUReports.add("The favorite navigation is define.", LogAs.PASSED,  new CaptureScreen((CaptureScreen.ScreenshotOf.BROWSER_PAGE)));
+        }
+
+        return isNavigationDefine;
     }
 
     public void verifyThatWeCanSeeTheResults() {

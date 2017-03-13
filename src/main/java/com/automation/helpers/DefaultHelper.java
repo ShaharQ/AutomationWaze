@@ -165,12 +165,14 @@ public class DefaultHelper {
         try {
             waitForVisibility(web_element);
             web_element.clear();
-            web_element.sendKeys(target_input);
+            web_element.click();
+            driver.getKeyboard().sendKeys(target_input);
             System.out.println("Target keys sent to WebElement: " + target_input);
             ATUReports.add("Target keys sent.", target_input, target_input, LogAs.PASSED, new CaptureScreen((CaptureScreen.ScreenshotOf.BROWSER_PAGE)));
             Assert.assertTrue(true);
 
         } catch (Exception msg) {
+            msg.printStackTrace();
             System.out.println("Fail to sent target keys: " + target_input);
             ATUReports.add("Target keys sent.", "True.", "False", LogAs.FAILED, new CaptureScreen(CaptureScreen.ScreenshotOf.BROWSER_PAGE));
             Assert.assertTrue(false);
@@ -189,7 +191,7 @@ public class DefaultHelper {
 
             System.out.println("press on the back icon.");
             ATUReports.add("press on the back icon.", "True.","True.", LogAs.PASSED, new CaptureScreen((CaptureScreen.ScreenshotOf.BROWSER_PAGE)));
-            Thread.sleep(200);
+            Thread.sleep(500);
         } catch (Exception e) {
             System.out.println("Fail to press on the back icon.");
             ATUReports.add("Fail to press on the back icon.", "True.", "False", LogAs.FAILED, new CaptureScreen(CaptureScreen.ScreenshotOf.BROWSER_PAGE));
@@ -302,4 +304,33 @@ public class DefaultHelper {
         }
         return isDisplay;
     }
+
+    public void verifyElementIsDisplayed(WebElement element , String description) {
+
+        if(isElementDisplayWithOutSelect(element)) {
+            System.out.println("The element: " + description + " is display.");
+            ATUReports.add("The element: " + element , "Display."
+                    , "Display.", LogAs.PASSED, new CaptureScreen((CaptureScreen.ScreenshotOf.BROWSER_PAGE)));
+
+        } else {
+
+            System.out.println("The element: "  + description + " is not display.");
+            ATUReports.add("The element: " + element , "Display.", "Not Display.", LogAs.FAILED,
+            new CaptureScreen((CaptureScreen.ScreenshotOf.BROWSER_PAGE)));
+        }
+
+    }
+
+    public void pressOnTheLayoutWithThatString(List<WebElement> layoutList,String nameToPress ) {
+
+        for(WebElement we : layoutList) {
+            List<WebElement> elementsInLayout = we.findElements(By.className("android.widget.TextView"));
+            for(WebElement el : elementsInLayout) {
+                    if(el.getText().equals(nameToPress)) {
+                        clickElement(we , "Layout that contain the string:" + nameToPress);
+                        break;
+                    }
+                }
+            }
+        }
 }
