@@ -9,9 +9,9 @@ import java.net.MalformedURLException;
  */
 public class LoginHelper extends DefaultHelper {
 
-    MapHelper mapHelper;
-    SearchHelper searchHelper;
-    WazeAccountHelper wazeAccountHelper;
+    private MapHelper mapHelper;
+    private NavigationHelper navigationHelper;
+    private  WazeAccountHelper wazeAccountHelper;
 
     //Set Peopert for ATU Reporter Configuration
     {
@@ -28,8 +28,8 @@ public class LoginHelper extends DefaultHelper {
         mapHelper = new MapHelper(driver);
         mapHelper.clickElement(mapHelper.map , "Map");
         mapHelper.clickElement(mapHelper.searchButton , "Search button");
-        searchHelper =  new SearchHelper(driver);
-        searchHelper.clickElement(searchHelper.profiePicture,"Profile picture");
+        navigationHelper =  new NavigationHelper(driver);
+        navigationHelper.clickElement(navigationHelper.profiePicture,"Profile picture");
         wazeAccountHelper = new WazeAccountHelper(driver);
         wazeAccountHelper.clickElement(wazeAccountHelper.existAccount,"existing Account");
         wazeAccountHelper = new WazeAccountHelper(driver);

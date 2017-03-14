@@ -24,14 +24,15 @@ public class TC1003NavigateToWork {
         System.setProperty("atu.reporter.config", "src/main/resources/atu.properties");
 
     }
-    AppiumDriver driver;
-    MapHelper mapHelper;
-    SearchHelper searchHelper;
-    ETAPopupHelper etaPopupHelper;
-    ConfirmHelper confirmHelper;
-    WorkPopupHelper workPopupHelper;
-    String proccessName , phoneName;
-    DriverManager driverManager = new DriverManager();
+    private AppiumDriver driver;
+    private MapHelper mapHelper;
+    private NavigationHelper navigationHelper;
+    private ETAPopupHelper etaPopupHelper;
+    private ConfirmHelper confirmHelper;
+    private NavigationResultsHelper navigationResultsHelper;
+    private WorkPopupHelper workPopupHelper;
+    private String proccessName , phoneName;
+    private DriverManager driverManager = new DriverManager();
 
 
     @BeforeTest
@@ -63,11 +64,11 @@ public class TC1003NavigateToWork {
         //2.click on the main menu icon(the magnifying glass icon)
         mapHelper.clickElement(mapHelper.searchButton , "Search button");
 
-        //3.precondition : the user should have an empty home favorite ,
-        searchHelper = new SearchHelper(driver);
-        if(searchHelper.isTheWorkNavigationIsDefine()) {
+        //3.precondition : the user should have an empty work favorite
+        navigationHelper = new NavigationHelper(driver);
+        if(navigationHelper.isTheWorkNavigationIsDefine()) {
             //3.1 tap the more options icon (the three grey dots)
-            searchHelper.clickElement(searchHelper.favoriteList.get(1), "home three dots");
+            navigationHelper.clickElement(navigationHelper.favoriteList.get(1), "more option");
 
             //3.2 tap the remove cell - this cell isn't fully visible when tapping
             //the more options icon. Notice that swiping is required to make it fully visible
@@ -77,22 +78,23 @@ public class TC1003NavigateToWork {
         }
         //end precondition - home address is now removed
         //4.tap the home favorite cell
-        searchHelper =  new SearchHelper(driver);
-        searchHelper.clickElement(searchHelper.favoriteList.get(1), "work favorite");
+        navigationHelper =  new NavigationHelper(driver);
+        navigationHelper.clickElement(navigationHelper.favoriteList.get(1), "work favorite");
 
         //5.enter the string 'tel aviv' abd tap enter
-        searchHelper.sendKeysToWebElementInput(searchHelper.searchBox,"tel aviv");
-        searchHelper.sendKeyboardKeys(66 , "Search");
+        navigationHelper.sendKeysToWebElementInput(navigationHelper.searchBox,"tel aviv");
+        navigationHelper.sendKeyboardKeys(navigationHelper.SEARCHBUTTON , "Search");
 
         //6.Search the first results
-        searchHelper.selectTheFirstResult();
+        navigationResultsHelper = new NavigationResultsHelper(driver);
+        navigationResultsHelper.selectSearchResult(0);
 
-        //7. tap 'set home & go'
+        //7. tap 'set work & go'
         workPopupHelper = new WorkPopupHelper(driver);
         workPopupHelper.clickElement(workPopupHelper.addAdressButton, "add address button");
 
         //8.Tap 'GO now'
-        searchHelper.clickElement(searchHelper.goButton , "go now");
+        navigationHelper.clickElement(navigationHelper.goButton , "go now");
 
         //9.Open the ETA popup by tapping the blue eta arrow
         mapHelper = new MapHelper(driver);
@@ -104,8 +106,9 @@ public class TC1003NavigateToWork {
 
         //11.Tap 'No thanks'
         confirmHelper = new ConfirmHelper(driver);
-        confirmHelper.clickElement(confirmHelper.noThanksButton ,"No thanks");
-
+        if(confirmHelper.isElementDisplayWithOutSelect(confirmHelper.noThanksButton)) {
+            confirmHelper.clickElement(confirmHelper.noThanksButton ,"No thanks");
+        }
 
         System.out.println("Done.");
         ATUReports.add("Message window.","Done." , "Done." , LogAs.PASSED , null);

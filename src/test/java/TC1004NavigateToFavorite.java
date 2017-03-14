@@ -23,17 +23,17 @@ public class TC1004NavigateToFavorite {
         System.setProperty("atu.reporter.config", "src/main/resources/atu.properties");
 
     }
-    AppiumDriver driver;
-    MapHelper mapHelper;
-    SearchHelper searchHelper;
-    ETAPopupHelper etaPopupHelper;
-    ConfirmHelper confirmHelper;
-    WorkPopupHelper workPopupHelper;
-    FavoriteHelper favoriteHelper;
-    AddFavoriteHelper addFavoriteHelper;
-    NameFavoritePopupHelper nameFavoritePopupHelper;
-    String proccessName , phoneName;
-    DriverManager driverManager = new DriverManager();
+    private AppiumDriver driver;
+    private MapHelper mapHelper;
+    private NavigationHelper navigationHelper;
+    private NavigationResultsHelper navigationResultsHelper;
+    private ETAPopupHelper etaPopupHelper;
+    private ConfirmHelper confirmHelper;
+    private FavoriteHelper favoriteHelper;
+    private AddFavoriteHelper addFavoriteHelper;
+    private NameFavoritePopupHelper nameFavoritePopupHelper;
+    private String proccessName , phoneName;
+    private DriverManager driverManager = new DriverManager();
 
 
     @BeforeTest
@@ -66,42 +66,47 @@ public class TC1004NavigateToFavorite {
         mapHelper.clickElement(mapHelper.searchButton , "Search button");
 
         //3.precondition : if the user have empty favorite
-        searchHelper = new SearchHelper(driver);
-        searchHelper.clickElement(searchHelper.searchLayout.get(2) ,"favorite");
+        navigationHelper = new NavigationHelper(driver);
+        navigationHelper.clickElement(navigationHelper.searchLayout.get(2) ,"favorite");
 
-        //4.Tap on the favorite
-        favoriteHelper = new FavoriteHelper(driver);
-        favoriteHelper.clickElement(favoriteHelper.addFavoriteAddress , "add favorite");
-
-        //5.enter the string bat yam
-        addFavoriteHelper = new AddFavoriteHelper(driver);
-        addFavoriteHelper.sendKeysToWebElementInput(addFavoriteHelper.searchBoxFavorite,"bat yam");
-        addFavoriteHelper.sendKeyboardKeys(66 , "Search");
-
-        //6.Search the first results
-        searchHelper = new SearchHelper(driver);
-        searchHelper.selectTheFirstResult();
-
-        //6.Tap on finish
-        nameFavoritePopupHelper = new NameFavoritePopupHelper(driver);
-        nameFavoritePopupHelper.sendKeysToWebElementInput(nameFavoritePopupHelper.nameOfFavorite,"bat yam fav");
-        nameFavoritePopupHelper.clickElement(nameFavoritePopupHelper.doneButton ,"done");
-
-        //7.Verify that we return to the map
-        mapHelper.verifyElementIsDisplayed(mapHelper.map , "Map");
-
-        //8.click on the main menu icon(the magnifying glass icon)
-        mapHelper.clickElement(mapHelper.searchButton , "Search button");
-
-        //9.precondition : if the user have empty favorite
-        searchHelper.clickElement(searchHelper.searchLayout.get(2) ,"favorite");
-
-        //10.Select the first favorite which is not home or work
+        //4.Select the first favorite which is not home or work
         String nameToPress =   addFavoriteHelper.findNameThatIsntWorkOrHome();
-        addFavoriteHelper.pressOnTheLayoutWithThatString(addFavoriteHelper.favoriteLayouts,nameToPress);
+        if(nameToPress == null) {
+            //5.Tap on the favorite
+            favoriteHelper = new FavoriteHelper(driver);
+            favoriteHelper.clickElement(favoriteHelper.addFavoriteAddress , "add favorite");
+
+            //6.enter the string bat yam
+            addFavoriteHelper = new AddFavoriteHelper(driver);
+            addFavoriteHelper.sendKeysToWebElementInput(addFavoriteHelper.searchBoxFavorite,"bat yam");
+            addFavoriteHelper.sendKeyboardKeys(navigationHelper.SEARCHBUTTON , "Search");
+
+            //7.Search the first results
+            navigationResultsHelper = new NavigationResultsHelper(driver);
+            navigationResultsHelper.selectSearchResult(0);
+
+            //8.Tap on finish
+            nameFavoritePopupHelper = new NameFavoritePopupHelper(driver);
+            nameFavoritePopupHelper.sendKeysToWebElementInput(nameFavoritePopupHelper.nameOfFavorite,"bat yam fav");
+            nameFavoritePopupHelper.clickElement(nameFavoritePopupHelper.doneButton ,"done");
+
+            //9.Verify that we return to the map
+            mapHelper.verifyElementIsDisplayed(mapHelper.map , "Map");
+
+            //10.click on the main menu icon(the magnifying glass icon)
+            mapHelper.clickElement(mapHelper.searchButton , "Search button");
+
+            //11.precondition : if the user have empty favorite
+            navigationHelper.clickElement(navigationHelper.searchLayout.get(2) ,"favorite");
+
+            nameToPress =   addFavoriteHelper.findNameThatIsntWorkOrHome();
+            addFavoriteHelper.pressOnTheLayoutWithThatString(addFavoriteHelper.favoriteLayouts,nameToPress);
+        } else {
+            addFavoriteHelper.pressOnTheLayoutWithThatString(addFavoriteHelper.favoriteLayouts,nameToPress);
+        }
 
         //11.Tap ‘Go now’
-        searchHelper.clickElement(searchHelper.goButton , "go now");
+        navigationHelper.clickElement(navigationHelper.goButton , "go now");
 
         //12.Open the ETA popup by tapping the blue eta arrow
         mapHelper = new MapHelper(driver);
@@ -113,7 +118,9 @@ public class TC1004NavigateToFavorite {
 
         //14.Tap 'No thanks'
         confirmHelper = new ConfirmHelper(driver);
-        confirmHelper.clickElement(confirmHelper.noThanksButton ,"No thanks");
+        if(confirmHelper.isElementDisplayWithOutSelect(confirmHelper.noThanksButton)) {
+            confirmHelper.clickElement(confirmHelper.noThanksButton ,"No thanks");
+        }
 
 
         System.out.println("Done.");

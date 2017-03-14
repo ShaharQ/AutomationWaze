@@ -23,13 +23,13 @@ public class TC1001NavigateToGasStation {
         System.setProperty("atu.reporter.config", "src/main/resources/atu.properties");
 
     }
-    AppiumDriver driver;
-    MapHelper mapHelper;
-    SearchHelper searchHelper;
-    ETAPopupHelper etaPopupHelper;
-    ConfirmHelper confirmHelper;
-    String proccessName , phoneName;
-    DriverManager driverManager = new DriverManager();
+    private AppiumDriver driver;
+    private MapHelper mapHelper;
+    private NavigationHelper navigationHelper;
+    private ETAPopupHelper etaPopupHelper;
+    private ConfirmHelper confirmHelper;
+    private String proccessName , phoneName;
+    private DriverManager driverManager = new DriverManager();
 
     @BeforeTest
     public void setup() throws IOException, InterruptedException {
@@ -71,24 +71,24 @@ public class TC1001NavigateToGasStation {
         mapHelper.clickElement(mapHelper.searchButton , "Search button");
 
         //4.Tap the search box
-        searchHelper =  new SearchHelper(driver);
-        searchHelper.clickElement(searchHelper.searchBox,"Search box");
+        navigationHelper =  new NavigationHelper(driver);
+        navigationHelper.clickElement(navigationHelper.searchBox,"Search box");
 
         //5.Tap 'Gas station' cell
-        searchHelper.verifyThatTheTextOfTheElementIsAsExpected(searchHelper.autoCompleteSearchResults.get(0),"Gas stations","תחנות דלק");
-        searchHelper.clickElement(searchHelper.autoCompleteSearchResults.get(0) , "Gas Station");
+        navigationHelper.verifyThatTheTextOfTheElementIsAsExpected(navigationHelper.autoCompleteSearchResults.get(0),"Gas stations","תחנות דלק");
+        navigationHelper.clickElement(navigationHelper.autoCompleteSearchResults.get(0) , "Gas Station");
 
         //6.verify the screen title is 'Gas Stations'
-        searchHelper.verifyThatTheTextOfTheElementIsAsExpected(searchHelper.titleBarText,"Gas stations","תחנות דלק" );
+        navigationHelper.verifyThatTheTextOfTheElementIsAsExpected(navigationHelper.titleBarText,"Gas stations","תחנות דלק" );
 
         //7.select the second Gas stations results
-        searchHelper.clickElement(searchHelper.autoCompleteSearchResults.get(1) , "Second Gas stations");
+        navigationHelper.clickElement(navigationHelper.autoCompleteSearchResults.get(1) , "Second Gas stations");
 
         //8.Tap 'GO'
-        searchHelper.clickElement(searchHelper.previewGoButton , "preview go");
+        navigationHelper.clickElement(navigationHelper.previewGoButton , "preview go");
 
         //9.Tap 'GO now'
-        searchHelper.clickElement(searchHelper.goButton , "go now");
+        navigationHelper.clickElement(navigationHelper.goButton , "go now");
 
         //10.Open the ETA popup by tapping the blue eta arrow
         mapHelper = new MapHelper(driver);

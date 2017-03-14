@@ -3,7 +3,7 @@
  */
 
 
-        import atu.testng.reports.ATUReports;
+import atu.testng.reports.ATUReports;
         import atu.testng.reports.listeners.ATUReportsListener;
         import atu.testng.reports.listeners.ConfigurationListener;
         import atu.testng.reports.listeners.MethodListener;
@@ -24,15 +24,15 @@ public class TC1002NavigateHome {
         System.setProperty("atu.reporter.config", "src/main/resources/atu.properties");
 
     }
-    AppiumDriver driver;
-    MapHelper mapHelper;
-    SearchHelper searchHelper;
-    DirectionsHelper directionsHelper;
-    ETAPopupHelper etaPopupHelper;
-    ConfirmHelper confirmHelper;
-    HomePopupHelper homePopupHelper;
-    String proccessName , phoneName;
-    DriverManager driverManager = new DriverManager();
+    private AppiumDriver driver;
+    private MapHelper mapHelper;
+    private NavigationHelper navigationHelper;
+    private NavigationResultsHelper navigationResultsHelper;
+    private ETAPopupHelper etaPopupHelper;
+    private ConfirmHelper confirmHelper;
+    private HomePopupHelper homePopupHelper;
+    private String proccessName , phoneName;
+    private DriverManager driverManager = new DriverManager();
 
 
     @BeforeTest
@@ -65,10 +65,10 @@ public class TC1002NavigateHome {
         mapHelper.clickElement(mapHelper.searchButton , "Search button");
 
         //3.precondition : the user should have an empty home favorite ,
-        searchHelper = new SearchHelper(driver);
-        if(searchHelper.isElementDisplay(searchHelper.homeFavoriteDot.get(0))) {
+        navigationHelper = new NavigationHelper(driver);
+        if(navigationHelper.isElementDisplay(navigationHelper.homeFavoriteDot.get(0))) {
             //3.1 tap the more options icon (the three grey dots)
-            searchHelper.clickElement(searchHelper.favoriteList.get(0), "home three dots");
+            navigationHelper.clickElement(navigationHelper.favoriteList.get(0), "more options");
 
             //3.2 tap the remove cell - this cell isn't fully visible when tapping
             //the more options icon. Notice that swiping is required to make it fully visible
@@ -78,22 +78,23 @@ public class TC1002NavigateHome {
         }
         //end precondition - home address is now removed
         //4.tap the home favorite cell
-        searchHelper =  new SearchHelper(driver);
-        searchHelper.clickElement(searchHelper.favoriteList.get(0), "home favorite");
+        navigationHelper =  new NavigationHelper(driver);
+        navigationHelper.clickElement(navigationHelper.favoriteList.get(0), "home favorite");
 
         //5.enter the string 'rehovot' abd tap enter
-        searchHelper.sendKeysToWebElementInput(searchHelper.searchBox,"rehovot");
-        searchHelper.sendKeyboardKeys(66 , "Search");
+        navigationHelper.sendKeysToWebElementInput(navigationHelper.searchBox,"rehovot");
+        navigationHelper.sendKeyboardKeys(66 , "Search");
 
         //6.Search the first results
-        searchHelper.selectTheFirstResult();
+        navigationResultsHelper = new NavigationResultsHelper(driver);
+        navigationResultsHelper.selectSearchResult(0);
 
-        //7. tap 'set home & go'
+        //7. tap 'set work & go'
         homePopupHelper = new HomePopupHelper(driver);
         homePopupHelper.clickElement(homePopupHelper.addAdressButton, "add address button");
 
         //8.Tap 'GO now'
-        searchHelper.clickElement(searchHelper.goButton , "go now");
+        navigationHelper.clickElement(navigationHelper.goButton , "go now");
 
         //9.Open the ETA popup by tapping the blue eta arrow
         mapHelper = new MapHelper(driver);

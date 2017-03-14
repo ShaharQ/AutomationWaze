@@ -1,6 +1,7 @@
 /**
  * Created by mkalash on 3/6/17.
  */
+
 import atu.testng.reports.ATUReports;
 import atu.testng.reports.listeners.ATUReportsListener;
 import atu.testng.reports.listeners.ConfigurationListener;
@@ -20,20 +21,20 @@ public class NavigateSuite {
         System.setProperty("atu.reporter.config", "src/main/resources/atu.properties");
 
     }
-    AppiumDriver driver;
-    MapHelper mapHelper;
-    SearchHelper searchHelper;
-    DirectionsHelper directionsHelper;
-    WorkPopupHelper workPopupHelper;
-    HomePopupHelper homePopupHelper;
-    ETAPopupHelper etaPopupHelper;
-    ConfirmHelper confirmHelper;
-    AddFavoriteHelper addFavoriteHelper;
-    NameFavoritePopupHelper nameFavoritePopupHelper;
-    FavoriteHelper favoriteHelper;
-    String proccessName , phoneName;
-    DriverManager driverManager = new DriverManager();
-    int pid;
+    private AppiumDriver driver;
+    private MapHelper mapHelper;
+    private NavigationHelper navigationHelper;
+    private DirectionsHelper directionsHelper;
+    private WorkPopupHelper workPopupHelper;
+    private HomePopupHelper homePopupHelper;
+    private ETAPopupHelper etaPopupHelper;
+    private ConfirmHelper confirmHelper;
+    private NavigationResultsHelper navigationResultsHelper;
+    private AddFavoriteHelper addFavoriteHelper;
+    private NameFavoritePopupHelper nameFavoritePopupHelper;
+    private FavoriteHelper favoriteHelper;
+    private String proccessName , phoneName;
+    private DriverManager driverManager = new DriverManager();
 
     @BeforeClass
     public void setup() throws InterruptedException, MalformedURLException {
@@ -75,24 +76,24 @@ public class NavigateSuite {
         mapHelper.clickElement(mapHelper.searchButton , "Search button");
 
         //4.Tap the search box
-        searchHelper =  new SearchHelper(driver);
-        searchHelper.clickElement(searchHelper.searchBox,"Search box");
+        navigationHelper =  new NavigationHelper(driver);
+        navigationHelper.clickElement(navigationHelper.searchBox,"Search box");
 
         //5.Tap 'Gas station' cell
-        searchHelper.verifyThatTheTextOfTheElementIsAsExpected(searchHelper.autoCompleteSearchResults.get(0),"Gas stations","תחנות דלק");
-        searchHelper.clickElement(searchHelper.autoCompleteSearchResults.get(0) , "Gas Station");
+        navigationHelper.verifyThatTheTextOfTheElementIsAsExpected(navigationHelper.autoCompleteSearchResults.get(0),"Gas stations","תחנות דלק");
+        navigationHelper.clickElement(navigationHelper.autoCompleteSearchResults.get(0) , "Gas Station");
 
         //6.verify the screen title is 'Gas Stations'
-        searchHelper.verifyThatTheTextOfTheElementIsAsExpected(searchHelper.titleBarText,"Gas stations","תחנות דלק" );
+        navigationHelper.verifyThatTheTextOfTheElementIsAsExpected(navigationHelper.titleBarText,"Gas stations","תחנות דלק" );
 
         //7.select the second Gas stations results
-        searchHelper.clickElement(searchHelper.autoCompleteSearchResults.get(1) , "Second Gas stations");
+        navigationHelper.clickElement(navigationHelper.autoCompleteSearchResults.get(1) , "Second Gas stations");
 
         //8.Tap 'GO'
-        searchHelper.clickElement(searchHelper.previewGoButton , "preview go");
+        navigationHelper.clickElement(navigationHelper.previewGoButton , "preview go");
 
         //9.Tap 'GO now'
-        searchHelper.clickElement(searchHelper.goButton , "go now");
+        navigationHelper.clickElement(navigationHelper.goButton , "go now");
 
         //10.Open the ETA popup by tapping the blue eta arrow
         mapHelper = new MapHelper(driver);
@@ -127,45 +128,46 @@ public class NavigateSuite {
         mapHelper.clickElement(mapHelper.searchButton , "Search button");
 
         //4.verify that the search page opened - (Tap the main menu icon(the magnifying glass icon)
-        searchHelper =  new SearchHelper(driver);
-        searchHelper.verifySearchViewOpen();
+        navigationHelper =  new NavigationHelper(driver);
+        navigationHelper.verifySearchViewOpen();
 
         //5.write hike in the edit box
-        searchHelper.sendKeysToWebElementInput(searchHelper.searchBox,"nike");
+        navigationHelper.sendKeysToWebElementInput(navigationHelper.searchBox,"nike");
 
         //6.Tap the close icon in the search box
-        searchHelper.clickElement(searchHelper.exitSearch , "Exit button");
+        navigationHelper.clickElement(navigationHelper.exitSearch , "Exit button");
 
         //7.Enter the string 'hike' and tap enter
-        searchHelper.sendKeysToWebElementInput(searchHelper.searchBox,"nike" );
-        searchHelper.sendKeyboardKeys(66 , "Search");
+        navigationHelper.sendKeysToWebElementInput(navigationHelper.searchBox,"nike" );
+        navigationHelper.sendKeyboardKeys(navigationHelper.SEARCHBUTTON , "Search");
 
         //8.Search results should appear after a few seconds
-        searchHelper.verifyThatWeCanSeeTheResults();
+        navigationResultsHelper = new NavigationResultsHelper(driver);
+        navigationResultsHelper.verifyThatWeCanSeeTheResults();
 
         //9.Tap 'Google'
-        searchHelper.clickOnTheBottomObject(2 , "Google");
+        navigationResultsHelper.clickOnTheBottomObject(2 , "Google");
 
         //10.Tap 'Places'
-        searchHelper.clickOnTheBottomObject(1 , "Places");
+        navigationResultsHelper.clickOnTheBottomObject(1 , "Places");
 
         //11.Tap 'Search Results'
-        searchHelper.clickOnTheBottomObject(0 , "Search Results");
+        navigationResultsHelper.clickOnTheBottomObject(0 , "Search Results");
 
         //12.Search the first results
-        searchHelper.selectTheFirstResult();
+        navigationResultsHelper.selectSearchResult(0);
 
         //13.Tap the 'more options' icon (the grey rectangle with the three white dots)
-        searchHelper.clickElement(searchHelper.threeDots , "more options");
+        navigationHelper.clickElement(navigationHelper.threeDots , "more options");
 
         //14.Tap back(the Android action button)
-        searchHelper.clickBackOnTheDevice();
+        navigationHelper.clickBackOnTheDevice();
 
         //15.Tap 'GO'
-        searchHelper.clickElement(searchHelper.previewGoButton , "preview go");
+        navigationHelper.clickElement(navigationHelper.previewGoButton , "preview go");
 
         //16.Tap 'GO now'
-        searchHelper.clickElement(searchHelper.goButton , "go now");
+        navigationHelper.clickElement(navigationHelper.goButton , "go now");
 
         //17.Tap the navigation list bar(where the route directions are)
         mapHelper = new MapHelper(driver);
@@ -179,7 +181,7 @@ public class NavigateSuite {
         directionsHelper.clickElement(directionsHelper.nextTurns , "Next Turns");
 
         //20.Tap back(the Android action button)
-        searchHelper.clickBackOnTheDevice();
+        navigationHelper.clickBackOnTheDevice();
 
         //21.Open the ETA popup by tapping the blue eta arrow
         mapHelper = new MapHelper(driver);
@@ -216,10 +218,10 @@ public class NavigateSuite {
         mapHelper.clickElement(mapHelper.searchButton , "Search button");
 
         //3.precondition : the user should have an empty home favorite ,
-        searchHelper = new SearchHelper(driver);
-        if(searchHelper.homeFavoriteDot.get(0).isDisplayed()) {
+        navigationHelper = new NavigationHelper(driver);
+        if(navigationHelper.homeFavoriteDot.get(0).isDisplayed()) {
             //3.1 tap the more options icon (the three grey dots)
-            searchHelper.clickElement(searchHelper.homeFavoriteDot.get(0), "home three dots");
+            navigationHelper.clickElement(navigationHelper.homeFavoriteDot.get(0), "home three dots");
 
             //3.2 tap the remove cell - this cell isn't fully visible when tapping
             //the more options icon. Notice that swiping is required to make it fully visible
@@ -229,22 +231,22 @@ public class NavigateSuite {
         }
         //end precondition - home address is now removed
         //4.tap the home favorite cell
-        searchHelper =  new SearchHelper(driver);
-        searchHelper.clickElement(searchHelper.favoriteList.get(0), "home favorite");
+        navigationHelper =  new NavigationHelper(driver);
+        navigationHelper.clickElement(navigationHelper.favoriteList.get(0), "home favorite");
 
         //5.enter the string 'rehovot' abd tap enter
-        searchHelper.sendKeysToWebElementInput(searchHelper.searchBox,"rehovot");
-        searchHelper.sendKeyboardKeys(66 , "Search");
+        navigationHelper.sendKeysToWebElementInput(navigationHelper.searchBox,"rehovot");
+        navigationHelper.sendKeyboardKeys(navigationHelper.SEARCHBUTTON , "Search");
 
         //6.Search the first results
-        searchHelper.selectTheFirstResult();
+        navigationResultsHelper.selectSearchResult(0);
 
         //7. tap 'set home & go'
         homePopupHelper = new HomePopupHelper(driver);
         homePopupHelper.clickElement(homePopupHelper.addAdressButton, "add address button");
 
         //8.Tap 'GO now'
-        searchHelper.clickElement(searchHelper.goButton , "go now");
+        navigationHelper.clickElement(navigationHelper.goButton , "go now");
 
         //9.Open the ETA popup by tapping the blue eta arrow
         mapHelper = new MapHelper(driver);
@@ -278,10 +280,10 @@ public class NavigateSuite {
         mapHelper.clickElement(mapHelper.searchButton , "Search button");
 
         //3.precondition : the user should have an empty home favorite ,
-        searchHelper = new SearchHelper(driver);
-        if(searchHelper.isTheWorkNavigationIsDefine()) {
+        navigationHelper = new NavigationHelper(driver);
+        if(navigationHelper.isTheWorkNavigationIsDefine()) {
             //3.1 tap the more options icon (the three grey dots)
-            searchHelper.clickElement(searchHelper.homeFavoriteDot.get(1), "home three dots");
+            navigationHelper.clickElement(navigationHelper.homeFavoriteDot.get(1), "home three dots");
 
             //3.2 tap the remove cell - this cell isn't fully visible when tapping
             //the more options icon. Notice that swiping is required to make it fully visible
@@ -291,22 +293,22 @@ public class NavigateSuite {
         }
         //end precondition - home address is now removed
         //4.tap the home favorite cell
-        searchHelper =  new SearchHelper(driver);
-        searchHelper.clickElement(searchHelper.favoriteList.get(1), "work favorite");
+        navigationHelper =  new NavigationHelper(driver);
+        navigationHelper.clickElement(navigationHelper.favoriteList.get(1), "work favorite");
 
         //5.enter the string 'tel aviv' abd tap enter
-        searchHelper.sendKeysToWebElementInput(searchHelper.searchBox,"tel aviv");
-        searchHelper.sendKeyboardKeys(66 , "Search");
+        navigationHelper.sendKeysToWebElementInput(navigationHelper.searchBox,"tel aviv");
+        navigationHelper.sendKeyboardKeys(navigationHelper.SEARCHBUTTON , "Search");
 
         //6.Search the first results
-        searchHelper.selectTheFirstResult();
+        navigationResultsHelper.selectSearchResult(0);
 
         //7. tap 'set home & go'
         workPopupHelper = new WorkPopupHelper(driver);
         workPopupHelper.clickElement(workPopupHelper.addAdressButton, "add address button");
 
         //8.Tap 'GO now'
-        searchHelper.clickElement(searchHelper.goButton , "go now");
+        navigationHelper.clickElement(navigationHelper.goButton , "go now");
 
         //9.Open the ETA popup by tapping the blue eta arrow
         mapHelper = new MapHelper(driver);
@@ -327,7 +329,7 @@ public class NavigateSuite {
     }
 
     @Test
-    public void test() throws InterruptedException, IOException, AWTException {
+    public void NavigateToFavorite() throws InterruptedException, IOException, AWTException {
 
 
         //pre test after the app startup all the tooltips and encouragments should be eliminated
@@ -339,8 +341,8 @@ public class NavigateSuite {
         mapHelper.clickElement(mapHelper.searchButton , "Search button");
 
         //3.precondition : if the user have empty favorite
-        searchHelper = new SearchHelper(driver);
-        searchHelper.clickElement(searchHelper.searchLayout.get(2) ,"favorite");
+        navigationHelper = new NavigationHelper(driver);
+        navigationHelper.clickElement(navigationHelper.searchLayout.get(2) ,"favorite");
 
         //4.Tap on the favorite
         favoriteHelper = new FavoriteHelper(driver);
@@ -349,11 +351,11 @@ public class NavigateSuite {
         //5.enter the string bat yam
         addFavoriteHelper = new AddFavoriteHelper(driver);
         addFavoriteHelper.sendKeysToWebElementInput(addFavoriteHelper.searchBoxFavorite,"bat yam");
-        addFavoriteHelper.sendKeyboardKeys(66 , "Search");
+        addFavoriteHelper.sendKeyboardKeys(navigationHelper.SEARCHBUTTON , "Search");
 
         //6.Search the first results
-        searchHelper = new SearchHelper(driver);
-        searchHelper.selectTheFirstResult();
+        navigationResultsHelper = new NavigationResultsHelper(driver);
+        navigationResultsHelper.selectSearchResult(0);
 
         //6.Tap on finish
         nameFavoritePopupHelper = new NameFavoritePopupHelper(driver);
@@ -367,14 +369,14 @@ public class NavigateSuite {
         mapHelper.clickElement(mapHelper.searchButton , "Search button");
 
         //9.precondition : if the user have empty favorite
-        searchHelper.clickElement(searchHelper.searchLayout.get(2) ,"favorite");
+        navigationHelper.clickElement(navigationHelper.searchLayout.get(2) ,"favorite");
 
         //10.Select the first favorite which is not home or work
         String nameToPress =   addFavoriteHelper.findNameThatIsntWorkOrHome();
         addFavoriteHelper.pressOnTheLayoutWithThatString(addFavoriteHelper.favoriteLayouts,nameToPress);
 
         //11.Tap ‘Go now’
-        searchHelper.clickElement(searchHelper.goButton , "go now");
+        navigationHelper.clickElement(navigationHelper.goButton , "go now");
 
         //12.Open the ETA popup by tapping the blue eta arrow
         mapHelper = new MapHelper(driver);
@@ -386,8 +388,9 @@ public class NavigateSuite {
 
         //14.Tap 'No thanks'
         confirmHelper = new ConfirmHelper(driver);
-        confirmHelper.clickElement(confirmHelper.noThanksButton ,"No thanks");
-
+        if(confirmHelper.isElementDisplayWithOutSelect(confirmHelper.noThanksButton)) {
+            confirmHelper.clickElement(confirmHelper.noThanksButton ,"No thanks");
+        }
 
         System.out.println("Done.");
         ATUReports.add("Message window.","Done." , "Done." , LogAs.PASSED , null);

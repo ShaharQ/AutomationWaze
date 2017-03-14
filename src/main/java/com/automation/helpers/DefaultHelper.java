@@ -24,6 +24,7 @@ public class DefaultHelper {
 
     public AppiumDriver driver;
     public WebDriverWait wait;
+    public final int SEARCHBUTTON =  66;
 
     public DefaultHelper(AppiumDriver activity) {
 

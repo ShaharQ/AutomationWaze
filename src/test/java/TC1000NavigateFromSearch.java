@@ -16,14 +16,15 @@ public class TC1000NavigateFromSearch {
         System.setProperty("atu.reporter.config", "src/main/resources/atu.properties");
 
     }
-    AppiumDriver driver;
-    MapHelper mapHelper;
-    SearchHelper searchHelper;
-    DirectionsHelper directionsHelper;
-    ETAPopupHelper etaPopupHelper;
-    ConfirmHelper confirmHelper;
-    String proccessName , phoneName;
-    DriverManager driverManager = new DriverManager();
+    private AppiumDriver driver;
+    private MapHelper mapHelper;
+    private NavigationResultsHelper navigationResultsHelper;
+    private NavigationHelper navigationHelper;
+    private DirectionsHelper directionsHelper;
+    private ETAPopupHelper etaPopupHelper;
+    private ConfirmHelper confirmHelper;
+    private String proccessName , phoneName;
+    private DriverManager driverManager = new DriverManager();
 
 
     @BeforeClass
@@ -34,22 +35,21 @@ public class TC1000NavigateFromSearch {
         proccessName =  phoneName + "Node";
         Utils.startAppiumNode(proccessName);
         driver = driverManager.getDriver( System.getProperty("Phone"), "4444");
-        Utils.killAllCmd();
-        Utils.killingTheGrid();
-        driver.quit();
+
 
     }
 
     @AfterClass
     public void closeAppium() throws InterruptedException {
 
+        Utils.killAllCmd();
+        Utils.killingTheGrid();
+        driver.quit();
     }
 
     @Test
     public void test() throws InterruptedException, IOException, AWTException {
 
-        //1. open new session
-        //mapHelper.openNewSession("LG"); //da
 
         //1.pre test if we get the popup of drive now or later
         confirmHelper = new ConfirmHelper(driver);
@@ -68,45 +68,46 @@ public class TC1000NavigateFromSearch {
         mapHelper.clickElement(mapHelper.searchButton , "Search button");
 
         //4.verify that the search page opened - (Tap the main menu icon(the magnifying glass icon)
-        searchHelper =  new SearchHelper(driver);
-        searchHelper.verifySearchViewOpen();
+        navigationHelper =  new NavigationHelper(driver);
+        navigationHelper.verifySearchViewOpen();
 
         //5.write hike in the edit box
-        searchHelper.sendKeysToWebElementInput(searchHelper.searchBox,"nike");
+        navigationHelper.sendKeysToWebElementInput(navigationHelper.searchBox,"nike");
 
         //6.Tap the close icon in the search box
-        searchHelper.clickElement(searchHelper.exitSearch , "Exit button");
+        navigationHelper.clickElement(navigationHelper.exitSearch , "Exit button");
 
         //7.Enter the string 'hike' and tap enter
-        searchHelper.sendKeysToWebElementInput(searchHelper.searchBox,"nike" );
-        searchHelper.sendKeyboardKeys(66 , "Search");
+        navigationHelper.sendKeysToWebElementInput(navigationHelper.searchBox,"nike" );
+        navigationHelper.sendKeyboardKeys(navigationHelper.SEARCHBUTTON , "Search");
 
         //8.Search results should appear after a few seconds
-        searchHelper.verifyThatWeCanSeeTheResults();
+        navigationResultsHelper = new NavigationResultsHelper(driver);
+        navigationResultsHelper.verifyThatWeCanSeeTheResults();
 
         //9.Tap 'Google'
-        searchHelper.clickOnTheBottomObject(2 , "Google");
+        navigationResultsHelper.clickOnTheBottomObject(2 , "Google");
 
         //10.Tap 'Places'
-        searchHelper.clickOnTheBottomObject(1 , "Places");
+        navigationResultsHelper.clickOnTheBottomObject(1 , "Places");
 
         //11.Tap 'Search Results'
-        searchHelper.clickOnTheBottomObject(0 , "Search Results");
+        navigationResultsHelper.clickOnTheBottomObject(0 , "Search Results");
 
         //12.Search the first results
-        searchHelper.selectTheFirstResult();
+        navigationResultsHelper.selectSearchResult(0);
 
         //13.Tap the 'more options' icon (the grey rectangle with the three white dots)
-        searchHelper.clickElement(searchHelper.threeDots , "more options");
+        navigationHelper.clickElement(navigationHelper.threeDots , "more options");
 
        //14.Tap back(the Android action button)
-        searchHelper.clickBackOnTheDevice();
+        navigationHelper.clickBackOnTheDevice();
 
         //15.Tap 'GO'
-        searchHelper.clickElement(searchHelper.previewGoButton , "preview go");
+        navigationHelper.clickElement(navigationHelper.previewGoButton , "preview go");
 
         //16.Tap 'GO now'
-        searchHelper.clickElement(searchHelper.goButton , "go now");
+        navigationHelper.clickElement(navigationHelper.goButton , "go now");
 
         //17.Tap the navigation list bar(where the route directions are)
         mapHelper = new MapHelper(driver);
@@ -120,7 +121,7 @@ public class TC1000NavigateFromSearch {
         directionsHelper.clickElement(directionsHelper.nextTurns , "Next Turns");
 
         //20.Tap back(the Android action button)
-        searchHelper.clickBackOnTheDevice();
+        navigationHelper.clickBackOnTheDevice();
 
         //21.Open the ETA popup by tapping the blue eta arrow
         mapHelper = new MapHelper(driver);
