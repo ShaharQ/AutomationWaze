@@ -20,7 +20,7 @@ import java.util.List;
  */
 
 @Listeners({ ATUReportsListener.class, ConfigurationListener.class, MethodListener.class })
-public class NavigationHelper extends DefaultHelper {
+public class NavigationActivity extends DefaultActivity {
 
     //Set Peopert for ATU Reporter Configuration
     {
@@ -38,15 +38,9 @@ public class NavigationHelper extends DefaultHelper {
     @FindBy(id ="com.waze:id/btnClearSearch")
     public WebElement exitSearch;
     @FindBy(id ="com.waze:id/addressPreviewMore")
-    public WebElement threeDots;
-    @FindBy(id ="com.waze:id/addressPreviewGoButton")
-    public WebElement previewGoButton;
-    @FindBy(id ="com.waze:id/fragNavResGo")
-    public WebElement goButton;
+    public WebElement moreOptionButton;
     @FindBy(id = "com.waze:id/lblTitle")
     public List<WebElement> autoCompleteSearchResults;
-    @FindBy(id = "com.waze:id/titleBarTitleText")
-    public WebElement titleBarText;
     @FindBy(id = "com.waze:id/actionButton")
     public List<WebElement> homeFavoriteDot;
     @FindBy(id = "com.waze:id/addressItemTouch")
@@ -57,7 +51,7 @@ public class NavigationHelper extends DefaultHelper {
     public List<WebElement> searchLayout;
 
 
-    public NavigationHelper(AppiumDriver driver) throws InterruptedException {
+    public NavigationActivity(AppiumDriver driver) throws InterruptedException {
         super(driver);
         Thread.sleep(500);
         PageFactory.initElements(driver,this);

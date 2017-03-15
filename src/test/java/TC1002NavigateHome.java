@@ -25,12 +25,14 @@ public class TC1002NavigateHome {
 
     }
     private AppiumDriver driver;
-    private MapHelper mapHelper;
-    private NavigationHelper navigationHelper;
-    private NavigationResultsHelper navigationResultsHelper;
-    private ETAPopupHelper etaPopupHelper;
-    private ConfirmHelper confirmHelper;
-    private HomePopupHelper homePopupHelper;
+    private MapActivity mapActivity;
+    private NavigationActivity navigationActivity;
+    private NavigationSearchResultsActivity navigationSearchResultsActivity;
+    private EtaPopupActivity etaPopupActivity;
+    private GoNowPopupActivity goNowPopupActivity;
+    private ConfirmPopupActivity confirmPopupActivity;
+    private AddressItemOptionPopupActivity addressItemOptionPopupActivity;
+    private AddressPreviewActivity addressPreviewActivity;
     private String proccessName , phoneName;
     private DriverManager driverManager = new DriverManager();
 
@@ -58,56 +60,58 @@ public class TC1002NavigateHome {
 
         //pre test after the app startup all the tooltips and encouragments should be eliminated
         //1.click anywhere on the screen
-        mapHelper = new MapHelper(driver);
-        mapHelper.clickElement(mapHelper.map , "Map");
+        mapActivity = new MapActivity(driver);
+        mapActivity.clickElement(mapActivity.map , "Map");
 
         //2.click on the main menu icon(the magnifying glass icon)
-        mapHelper.clickElement(mapHelper.searchButton , "Search button");
+        mapActivity.clickElement(mapActivity.searchButton , "Search button");
 
         //3.precondition : the user should have an empty home favorite ,
-        navigationHelper = new NavigationHelper(driver);
-        if(navigationHelper.isElementDisplay(navigationHelper.homeFavoriteDot.get(0))) {
+        navigationActivity = new NavigationActivity(driver);
+        if(navigationActivity.isElementDisplay(navigationActivity.homeFavoriteDot.get(0))) {
             //3.1 tap the more options icon (the three grey dots)
-            navigationHelper.clickElement(navigationHelper.favoriteList.get(0), "more options");
+            navigationActivity.clickElement(navigationActivity.favoriteList.get(0), "more options");
 
             //3.2 tap the remove cell - this cell isn't fully visible when tapping
             //the more options icon. Notice that swiping is required to make it fully visible
-            homePopupHelper = new HomePopupHelper(driver);
-            homePopupHelper.swipeDown();
-            homePopupHelper.clickElement(homePopupHelper.removeButton.get(6), "remove button");
+            addressItemOptionPopupActivity = new AddressItemOptionPopupActivity(driver);
+            addressItemOptionPopupActivity.swipeDown();
+            addressItemOptionPopupActivity.clickElement(addressItemOptionPopupActivity.removeButton.get(6), "remove button");
         }
         //end precondition - home address is now removed
         //4.tap the home favorite cell
-        navigationHelper =  new NavigationHelper(driver);
-        navigationHelper.clickElement(navigationHelper.favoriteList.get(0), "home favorite");
+        navigationActivity =  new NavigationActivity(driver);
+        navigationActivity.clickElement(navigationActivity.favoriteList.get(0), "home favorite");
 
         //5.enter the string 'rehovot' abd tap enter
-        navigationHelper.sendKeysToWebElementInput(navigationHelper.searchBox,"rehovot");
-        navigationHelper.sendKeyboardKeys(66 , "Search");
+        navigationActivity.sendKeysToWebElementInput(navigationActivity.searchBox,"rehovot");
+        navigationActivity.sendKeyboardKeys(navigationActivity.SEARCHBUTTON , "Search");
 
         //6.Search the first results
-        navigationResultsHelper = new NavigationResultsHelper(driver);
-        navigationResultsHelper.selectSearchResult(0);
+        navigationSearchResultsActivity = new NavigationSearchResultsActivity(driver);
+        navigationSearchResultsActivity.selectSearchResult(0);
 
         //7. tap 'set work & go'
-        homePopupHelper = new HomePopupHelper(driver);
-        homePopupHelper.clickElement(homePopupHelper.addAdressButton, "add address button");
+        addressPreviewActivity = new AddressPreviewActivity(driver);
+        addressPreviewActivity.clickElement(addressPreviewActivity.addAdressButton, "add address button");
 
         //8.Tap 'GO now'
-        navigationHelper.clickElement(navigationHelper.goButton , "go now");
+        goNowPopupActivity = new GoNowPopupActivity(driver);
+        goNowPopupActivity.clickElement(goNowPopupActivity.goButton , "go now");
 
         //9.Open the ETA popup by tapping the blue eta arrow
-        mapHelper = new MapHelper(driver);
-        mapHelper.tapOnTheScreenByCoordinates(mapHelper.kmOfDriving.getLocation().getX() - mapHelper.minutesOfDriving.getLocation().getX()  , mapHelper.kmOfDriving.getLocation().getY(), "blue eta arrow");
+        mapActivity = new MapActivity(driver);
+        mapActivity.tapOnTheScreenByCoordinates(mapActivity.kmOfDriving.getLocation().getX() - mapActivity.minutesOfDriving.getLocation().getX()  , mapActivity.kmOfDriving.getLocation().getY(), "blue eta arrow");
 
         //10.Tap 'stop'
-        etaPopupHelper = new ETAPopupHelper(driver);
-        etaPopupHelper.clickElement(etaPopupHelper.stopButton , "stop button");
+        etaPopupActivity = new EtaPopupActivity(driver);
+        etaPopupActivity.clickElement(etaPopupActivity.stopButton , "stop button");
 
         //11.Tap 'No thanks'
-        confirmHelper = new ConfirmHelper(driver);
-        confirmHelper.clickElement(confirmHelper.noThanksButton ,"No thanks");
-
+        confirmPopupActivity = new ConfirmPopupActivity(driver);
+        if(confirmPopupActivity.noThanksButton.isDisplayed()) {
+            confirmPopupActivity.clickElement(confirmPopupActivity.noThanksButton ,"No thanks");
+        }
 
         System.out.println("Done.");
         ATUReports.add("Message window.","Done." , "Done." , LogAs.PASSED , null);

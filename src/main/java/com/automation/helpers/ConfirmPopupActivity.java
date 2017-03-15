@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 /**
  * Created by mkalash on 2/14/17.
  */
-public class ConfirmHelper extends DefaultHelper {
+public class ConfirmPopupActivity extends DefaultActivity {
 
 
         @FindBy(className = "android.widget.LinearLayout")
@@ -31,7 +31,7 @@ public class ConfirmHelper extends DefaultHelper {
 
         }
 
-        public ConfirmHelper(AppiumDriver driver) {
+        public ConfirmPopupActivity(AppiumDriver driver) {
 
                 super(driver);
                 PageFactory.initElements(driver,this);

@@ -24,14 +24,15 @@ public class TC1004NavigateToFavorite {
 
     }
     private AppiumDriver driver;
-    private MapHelper mapHelper;
-    private NavigationHelper navigationHelper;
-    private NavigationResultsHelper navigationResultsHelper;
-    private ETAPopupHelper etaPopupHelper;
-    private ConfirmHelper confirmHelper;
-    private FavoriteHelper favoriteHelper;
-    private AddFavoriteHelper addFavoriteHelper;
-    private NameFavoritePopupHelper nameFavoritePopupHelper;
+    private MapActivity mapActivity;
+    private NavigationActivity navigationActivity;
+    private NavigationSearchResultsActivity navigationSearchResultsActivity;
+    private EtaPopupActivity etaPopupActivity;
+    private ConfirmPopupActivity confirmPopupActivity;
+    private FavoriteActivity favoriteActivity;
+    private GoNowPopupActivity goNowPopupActivity;
+    private AddFavoriteActivity addFavoriteActivity;
+    private NameFavoritePopupActivity nameFavoritePopupActivity;
     private String proccessName , phoneName;
     private DriverManager driverManager = new DriverManager();
 
@@ -59,69 +60,70 @@ public class TC1004NavigateToFavorite {
 
         //pre test after the app startup all the tooltips and encouragments should be eliminated
         //1.click anywhere on the screen
-        mapHelper = new MapHelper(driver);
-        mapHelper.clickElement(mapHelper.map , "Map");
+        mapActivity = new MapActivity(driver);
+        mapActivity.clickElement(mapActivity.map , "Map");
 
         //2.click on the main menu icon(the magnifying glass icon)
-        mapHelper.clickElement(mapHelper.searchButton , "Search button");
+        mapActivity.clickElement(mapActivity.searchButton , "Search button");
 
         //3.precondition : if the user have empty favorite
-        navigationHelper = new NavigationHelper(driver);
-        navigationHelper.clickElement(navigationHelper.searchLayout.get(2) ,"favorite");
+        navigationActivity = new NavigationActivity(driver);
+        navigationActivity.clickElement(navigationActivity.searchLayout.get(2) ,"favorite");
 
         //4.Select the first favorite which is not home or work
-        String nameToPress =   addFavoriteHelper.findNameThatIsntWorkOrHome();
+        addFavoriteActivity = new AddFavoriteActivity(driver);
+        String nameToPress =   addFavoriteActivity.findNameThatIsntWorkOrHome();
         if(nameToPress == null) {
             //5.Tap on the favorite
-            favoriteHelper = new FavoriteHelper(driver);
-            favoriteHelper.clickElement(favoriteHelper.addFavoriteAddress , "add favorite");
+            favoriteActivity = new FavoriteActivity(driver);
+            favoriteActivity.clickElement(favoriteActivity.addFavoriteAddress , "add favorite");
 
             //6.enter the string bat yam
-            addFavoriteHelper = new AddFavoriteHelper(driver);
-            addFavoriteHelper.sendKeysToWebElementInput(addFavoriteHelper.searchBoxFavorite,"bat yam");
-            addFavoriteHelper.sendKeyboardKeys(navigationHelper.SEARCHBUTTON , "Search");
+            addFavoriteActivity = new AddFavoriteActivity(driver);
+            addFavoriteActivity.sendKeysToWebElementInput(addFavoriteActivity.searchBoxFavorite,"bat yam");
+            addFavoriteActivity.sendKeyboardKeys(navigationActivity.SEARCHBUTTON , "Search");
 
             //7.Search the first results
-            navigationResultsHelper = new NavigationResultsHelper(driver);
-            navigationResultsHelper.selectSearchResult(0);
+            navigationSearchResultsActivity = new NavigationSearchResultsActivity(driver);
+            navigationSearchResultsActivity.selectSearchResult(0);
 
             //8.Tap on finish
-            nameFavoritePopupHelper = new NameFavoritePopupHelper(driver);
-            nameFavoritePopupHelper.sendKeysToWebElementInput(nameFavoritePopupHelper.nameOfFavorite,"bat yam fav");
-            nameFavoritePopupHelper.clickElement(nameFavoritePopupHelper.doneButton ,"done");
+            nameFavoritePopupActivity = new NameFavoritePopupActivity(driver);
+            nameFavoritePopupActivity.sendKeysToWebElementInput(nameFavoritePopupActivity.nameOfFavorite,"bat yam fav");
+            nameFavoritePopupActivity.clickElement(nameFavoritePopupActivity.doneButton ,"done");
 
             //9.Verify that we return to the map
-            mapHelper.verifyElementIsDisplayed(mapHelper.map , "Map");
+            mapActivity.verifyElementIsDisplayed(mapActivity.map , "Map");
 
             //10.click on the main menu icon(the magnifying glass icon)
-            mapHelper.clickElement(mapHelper.searchButton , "Search button");
+            mapActivity.clickElement(mapActivity.searchButton , "Search button");
 
             //11.precondition : if the user have empty favorite
-            navigationHelper.clickElement(navigationHelper.searchLayout.get(2) ,"favorite");
+            navigationActivity.clickElement(navigationActivity.searchLayout.get(2) ,"favorite");
 
-            nameToPress =   addFavoriteHelper.findNameThatIsntWorkOrHome();
-            addFavoriteHelper.pressOnTheLayoutWithThatString(addFavoriteHelper.favoriteLayouts,nameToPress);
+            nameToPress =   addFavoriteActivity.findNameThatIsntWorkOrHome();
+            addFavoriteActivity.pressOnTheLayoutWithThatString(addFavoriteActivity.favoriteLayouts,nameToPress);
         } else {
-            addFavoriteHelper.pressOnTheLayoutWithThatString(addFavoriteHelper.favoriteLayouts,nameToPress);
+            addFavoriteActivity.pressOnTheLayoutWithThatString(addFavoriteActivity.favoriteLayouts,nameToPress);
         }
 
         //11.Tap ‘Go now’
-        navigationHelper.clickElement(navigationHelper.goButton , "go now");
+        goNowPopupActivity = new GoNowPopupActivity(driver);
+        goNowPopupActivity.clickElement(goNowPopupActivity.goButton , "go now");
 
         //12.Open the ETA popup by tapping the blue eta arrow
-        mapHelper = new MapHelper(driver);
-        mapHelper.tapOnTheScreenByCoordinates(mapHelper.kmOfDriving.getLocation().getX() - mapHelper.minutesOfDriving.getLocation().getX()  , mapHelper.kmOfDriving.getLocation().getY(), "blue eta arrow");
+        mapActivity = new MapActivity(driver);
+        mapActivity.tapOnTheScreenByCoordinates(mapActivity.kmOfDriving.getLocation().getX() - mapActivity.minutesOfDriving.getLocation().getX()  , mapActivity.kmOfDriving.getLocation().getY(), "blue eta arrow");
 
         //13.Tap 'stop'
-        etaPopupHelper = new ETAPopupHelper(driver);
-        etaPopupHelper.clickElement(etaPopupHelper.stopButton , "stop button");
+        etaPopupActivity = new EtaPopupActivity(driver);
+        etaPopupActivity.clickElement(etaPopupActivity.stopButton , "stop button");
 
         //14.Tap 'No thanks'
-        confirmHelper = new ConfirmHelper(driver);
-        if(confirmHelper.isElementDisplayWithOutSelect(confirmHelper.noThanksButton)) {
-            confirmHelper.clickElement(confirmHelper.noThanksButton ,"No thanks");
+        confirmPopupActivity = new ConfirmPopupActivity(driver);
+        if(confirmPopupActivity.isElementDisplayWithOutSelect(confirmPopupActivity.noThanksButton)) {
+            confirmPopupActivity.clickElement(confirmPopupActivity.noThanksButton ,"No thanks");
         }
-
 
         System.out.println("Done.");
         ATUReports.add("Message window.","Done." , "Done." , LogAs.PASSED , null);

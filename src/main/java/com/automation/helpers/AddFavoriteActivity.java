@@ -11,7 +11,7 @@ import java.util.List;
  * Created by mkalash on 3/13/17.
  */
 
-public class AddFavoriteHelper extends DefaultHelper {
+public class AddFavoriteActivity extends DefaultActivity {
 
     @FindBy(id = "com.waze:id/searchBox")
     public WebElement searchBoxFavorite;
@@ -26,7 +26,7 @@ public class AddFavoriteHelper extends DefaultHelper {
 
     }
 
-    public AddFavoriteHelper(AppiumDriver driver) {
+    public AddFavoriteActivity(AppiumDriver driver) {
         super(driver);
         PageFactory.initElements(driver,this);
     }

@@ -5,13 +5,19 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-/**
- * Created by mkalash on 3/7/17.
- */
-public class RecognizePasswordPopupHelper extends DefaultHelper {
+import java.util.List;
 
-        @FindBy(id = "com.google.android.gms:id/credential_save_reject")
-        public WebElement neverSavePassword;
+/**
+ * Created by mkalash on 2/14/17.
+ */
+public class EtaPopupActivity extends DefaultActivity {
+
+
+        @FindBy(id = "com.waze:id/fragNavResStop")
+        public WebElement stopButton;
+        @FindBy(className = "android.widget.LinearLayout")
+        public List<WebElement> stopButtonNew;
+
 
         //Set Peopert for ATU Reporter Configuration
         {
@@ -19,10 +25,9 @@ public class RecognizePasswordPopupHelper extends DefaultHelper {
 
         }
 
-        public RecognizePasswordPopupHelper(AppiumDriver driver) {
+        public EtaPopupActivity(AppiumDriver driver) {
             super(driver);
             PageFactory.initElements(driver,this);
         }
 }
-
 

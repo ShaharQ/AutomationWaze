@@ -7,15 +7,18 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
+
 /**
- * Created by mkalash on 3/13/17.
+ * Created by mkalash on 3/1/17.
  */
-public class WorkPopupHelper extends DefaultHelper {
+public class AddressPreviewActivity extends DefaultActivity {
 
     @FindBy(id = "com.waze:id/bottomSheetItem")
     public List<WebElement> removeButton;
     @FindBy(id = "com.waze:id/addressPreviewGoButton")
     public WebElement addAdressButton;
+    @FindBy(id ="com.waze:id/addressPreviewGoButton")
+    public WebElement previewGoButton;
 
 
 
@@ -25,9 +28,10 @@ public class WorkPopupHelper extends DefaultHelper {
 
     }
 
-    public WorkPopupHelper(AppiumDriver driver) {
+    public AddressPreviewActivity(AppiumDriver driver) {
         super(driver);
         PageFactory.initElements(driver,this);
     }
-
 }
+
+

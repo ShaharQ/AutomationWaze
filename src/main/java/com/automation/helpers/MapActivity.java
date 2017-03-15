@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Listeners;
 
 @Listeners({ ATUReportsListener.class, ConfigurationListener.class, MethodListener.class })
-public class MapHelper extends DefaultHelper {
+public class MapActivity extends DefaultActivity {
 
     @FindBy(id ="com.waze:id/mapViewWrapperMapView")
     public WebElement map;
@@ -29,7 +29,7 @@ public class MapHelper extends DefaultHelper {
 
     }
 
-    public MapHelper(AppiumDriver driver){
+    public MapActivity(AppiumDriver driver){
         super(driver);
         PageFactory.initElements(driver,this);
     }

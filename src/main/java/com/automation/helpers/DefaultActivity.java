@@ -20,13 +20,13 @@ import java.util.List;
 /**
  * Created by mkalash on 2/7/17.
  */
-public class DefaultHelper {
+public class DefaultActivity {
 
     public AppiumDriver driver;
     public WebDriverWait wait;
     public final int SEARCHBUTTON =  66;
 
-    public DefaultHelper(AppiumDriver activity) {
+    public DefaultActivity(AppiumDriver activity) {
 
         driver = activity;
         wait = new WebDriverWait(driver,15);

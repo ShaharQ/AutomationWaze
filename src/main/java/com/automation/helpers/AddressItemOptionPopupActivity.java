@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by mkalash on 3/1/17.
  */
-public class HomePopupHelper extends DefaultHelper {
+public class AddressItemOptionPopupActivity extends DefaultActivity {
 
     @FindBy(id = "com.waze:id/bottomSheetItem")
     public List<WebElement> removeButton;
@@ -25,7 +25,7 @@ public class HomePopupHelper extends DefaultHelper {
 
     }
 
-    public HomePopupHelper(AppiumDriver driver) {
+    public AddressItemOptionPopupActivity(AppiumDriver driver) {
         super(driver);
         PageFactory.initElements(driver,this);
     }

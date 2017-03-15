@@ -24,10 +24,13 @@ public class TC1001NavigateToGasStation {
 
     }
     private AppiumDriver driver;
-    private MapHelper mapHelper;
-    private NavigationHelper navigationHelper;
-    private ETAPopupHelper etaPopupHelper;
-    private ConfirmHelper confirmHelper;
+    private MapActivity mapActivity;
+    private NavigationActivity navigationActivity;
+    private NavigationSearchResultsActivity navigationSearchResultsActivity;
+    private AddressPreviewActivity addressPreviewActivity;
+    private EtaPopupActivity etaPopupActivity;
+    private GoNowPopupActivity goNowPopupActivity;
+    private ConfirmPopupActivity confirmPopupActivity;
     private String proccessName , phoneName;
     private DriverManager driverManager = new DriverManager();
 
@@ -51,56 +54,59 @@ public class TC1001NavigateToGasStation {
     @Test
     public void test() throws InterruptedException, IOException, AWTException {
 
-        //1. open new session
-        //mapHelper.openNewSession("LG");
 
         //1.pre test if we get the popup of drive now or later
-        confirmHelper = new ConfirmHelper(driver);
-        if(confirmHelper.isElementDisplay(confirmHelper.driverNowButton)) {
-            confirmHelper.clickElement(confirmHelper.driverNowButton, "drive now button");
-            confirmHelper.clickBackOnTheDevice();
-            confirmHelper.clickBackOnTheDevice();
+        confirmPopupActivity = new ConfirmPopupActivity(driver);
+        if(confirmPopupActivity.isElementDisplay(confirmPopupActivity.driverNowButton)) {
+            confirmPopupActivity.clickElement(confirmPopupActivity.driverNowButton, "drive now button");
+            confirmPopupActivity.clickBackOnTheDevice();
+            confirmPopupActivity.clickBackOnTheDevice();
         }
 
         //pre test after the app startup all the tooltips and encouragments should be eliminated
         //2.click anywhere on the screen
-        mapHelper = new MapHelper(driver);
-        mapHelper.clickElement(mapHelper.map , "Map");
+        mapActivity = new MapActivity(driver);
+        mapActivity.clickElement(mapActivity.map , "Map");
 
         //3.click on the main menu icon(the magnifying glass icon)
-        mapHelper.clickElement(mapHelper.searchButton , "Search button");
+        mapActivity.clickElement(mapActivity.searchButton , "Search button");
 
         //4.Tap the search box
-        navigationHelper =  new NavigationHelper(driver);
-        navigationHelper.clickElement(navigationHelper.searchBox,"Search box");
+        navigationActivity =  new NavigationActivity(driver);
+        navigationActivity.clickElement(navigationActivity.searchBox,"Search box");
 
         //5.Tap 'Gas station' cell
-        navigationHelper.verifyThatTheTextOfTheElementIsAsExpected(navigationHelper.autoCompleteSearchResults.get(0),"Gas stations","תחנות דלק");
-        navigationHelper.clickElement(navigationHelper.autoCompleteSearchResults.get(0) , "Gas Station");
+        navigationActivity.verifyThatTheTextOfTheElementIsAsExpected(navigationActivity.autoCompleteSearchResults.get(0),"Gas stations","תחנות דלק");
+        navigationActivity.clickElement(navigationActivity.autoCompleteSearchResults.get(0) , "Gas Station");
 
         //6.verify the screen title is 'Gas Stations'
-        navigationHelper.verifyThatTheTextOfTheElementIsAsExpected(navigationHelper.titleBarText,"Gas stations","תחנות דלק" );
+        navigationSearchResultsActivity = new NavigationSearchResultsActivity(driver);
+        navigationSearchResultsActivity.verifyThatTheTextOfTheElementIsAsExpected(navigationSearchResultsActivity.titleBarText,"Gas stations","תחנות דלק" );
 
         //7.select the second Gas stations results
-        navigationHelper.clickElement(navigationHelper.autoCompleteSearchResults.get(1) , "Second Gas stations");
+        navigationSearchResultsActivity.clickElement(navigationSearchResultsActivity.autoCompleteSearchResults.get(1) , "Second Gas stations");
 
         //8.Tap 'GO'
-        navigationHelper.clickElement(navigationHelper.previewGoButton , "preview go");
+        addressPreviewActivity = new AddressPreviewActivity(driver);
+        addressPreviewActivity.clickElement(addressPreviewActivity.previewGoButton , "preview go");
 
         //9.Tap 'GO now'
-        navigationHelper.clickElement(navigationHelper.goButton , "go now");
+        goNowPopupActivity = new GoNowPopupActivity(driver);
+        goNowPopupActivity.clickElement(goNowPopupActivity.goButton , "go now");
 
         //10.Open the ETA popup by tapping the blue eta arrow
-        mapHelper = new MapHelper(driver);
-        mapHelper.tapOnTheScreenByCoordinates(mapHelper.kmOfDriving.getLocation().getY() - mapHelper.minutesOfDriving.getLocation().getY()  , mapHelper.kmOfDriving.getLocation().getY(), "blue eta arrow");
+        mapActivity = new MapActivity(driver);
+        mapActivity.tapOnTheScreenByCoordinates(mapActivity.kmOfDriving.getLocation().getY() - mapActivity.minutesOfDriving.getLocation().getY()  , mapActivity.kmOfDriving.getLocation().getY(), "blue eta arrow");
 
         //11.Tap 'stop'
-        etaPopupHelper = new ETAPopupHelper(driver);
-        etaPopupHelper.clickElement(etaPopupHelper.stopButton , "stop button");
+        etaPopupActivity = new EtaPopupActivity(driver);
+        etaPopupActivity.clickElement(etaPopupActivity.stopButton , "stop button");
 
-        //12.Tap 'No thanks' +test
-        confirmHelper = new ConfirmHelper(driver);
-        confirmHelper.clickElement(confirmHelper.noThanksButton ,"No thanks");
+        //12.Tap 'No thanks'
+        confirmPopupActivity = new ConfirmPopupActivity(driver);
+        if(confirmPopupActivity.noThanksButton.isDisplayed()) {
+            confirmPopupActivity.clickElement(confirmPopupActivity.noThanksButton ,"No thanks");
+        }
 
         System.out.println("Done.");
         ATUReports.add("Message window.","Done." , "Done." , LogAs.PASSED , null);

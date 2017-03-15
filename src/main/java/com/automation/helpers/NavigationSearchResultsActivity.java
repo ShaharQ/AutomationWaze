@@ -15,12 +15,16 @@ import java.util.List;
 /**
  * Created by mkalash on 3/14/17.
  */
-public class NavigationResultsHelper extends DefaultHelper {
+public class NavigationSearchResultsActivity extends DefaultActivity {
 
     @FindBy(id ="com.waze:id/mainContainer")
     public List<WebElement> searchResults;
     @FindBy(id = "com.waze:id/tabStrip")
     public WebElement bottomTab;
+    @FindBy(id = "com.waze:id/titleBarTitleText")
+    public WebElement titleBarText;
+    @FindBy(id = "com.waze:id/lblTitle")
+    public List<WebElement> autoCompleteSearchResults;
 
     //Set Peopert for ATU Reporter Configuration
     {
@@ -28,7 +32,7 @@ public class NavigationResultsHelper extends DefaultHelper {
 
     }
 
-    public NavigationResultsHelper(AppiumDriver driver) {
+    public NavigationSearchResultsActivity(AppiumDriver driver) {
         super(driver);
         PageFactory.initElements(driver,this);
 

@@ -5,17 +5,18 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import java.util.List;
-
 /**
  * Created by mkalash on 3/13/17.
  */
-public class FavoriteHelper extends DefaultHelper {
 
-    @FindBy(id = "com.waze:id/addressItem")
-    public WebElement addFavoriteAddress;
-    @FindBy(className = "android.widget.LinearLayout")
-    public List<WebElement> stopButtonNew;
+public class NameFavoritePopupActivity extends DefaultActivity {
+
+    @FindBy(id = "com.waze:id/btnDone")
+    public WebElement doneButton;
+    @FindBy(id = "com.waze:id/btnCancel")
+    public WebElement cancelButton;
+    @FindBy(id = "com.waze:id/nameEditText")
+    public WebElement nameOfFavorite;
 
 
     //Set Peopert for ATU Reporter Configuration
@@ -24,7 +25,7 @@ public class FavoriteHelper extends DefaultHelper {
 
     }
 
-    public FavoriteHelper(AppiumDriver driver) {
+    public NameFavoritePopupActivity(AppiumDriver driver) {
         super(driver);
         PageFactory.initElements(driver,this);
     }

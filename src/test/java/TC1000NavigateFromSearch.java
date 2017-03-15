@@ -17,12 +17,14 @@ public class TC1000NavigateFromSearch {
 
     }
     private AppiumDriver driver;
-    private MapHelper mapHelper;
-    private NavigationResultsHelper navigationResultsHelper;
-    private NavigationHelper navigationHelper;
-    private DirectionsHelper directionsHelper;
-    private ETAPopupHelper etaPopupHelper;
-    private ConfirmHelper confirmHelper;
+    private MapActivity mapActivity;
+    private NavigationSearchResultsActivity navigationSearchResultsActivity;
+    private AddressPreviewActivity addressPreviewActivity;
+    private NavigationActivity navigationActivity;
+    private DirectionsActivity directionsActivity;
+    private EtaPopupActivity etaPopupActivity;
+    private GoNowPopupActivity goNowPopupActivity;
+    private ConfirmPopupActivity confirmPopupActivity;
     private String proccessName , phoneName;
     private DriverManager driverManager = new DriverManager();
 
@@ -52,89 +54,92 @@ public class TC1000NavigateFromSearch {
 
 
         //1.pre test if we get the popup of drive now or later
-        confirmHelper = new ConfirmHelper(driver);
-       if(confirmHelper.driverNowOrLaterPopUp.isDisplayed()) {
-           confirmHelper.clickElement(confirmHelper.driverNowButton, "drive now button");
-           confirmHelper.clickBackOnTheDevice();
-           confirmHelper.clickBackOnTheDevice();
-        }
+//        confirmPopupActivity = new ConfirmPopupActivity(driver);
+//       if(confirmPopupActivity.driverNowOrLaterPopUp.isDisplayed()) {
+//           confirmPopupActivity.clickElement(confirmPopupActivity.driverNowButton, "drive now button");
+//           confirmPopupActivity.clickBackOnTheDevice();
+//           confirmPopupActivity.clickBackOnTheDevice();
+//        }
 
         //pre test after the app startup all the tooltips and encouragments should be eliminated
         //2.click anywhere on the screen
-        mapHelper = new MapHelper(driver);
-        mapHelper.clickElement(mapHelper.map , "Map");
+        mapActivity = new MapActivity(driver);
+        mapActivity.clickElement(mapActivity.map , "Map");
 
         //3.click on the main menu icon(the magnifying glass icon)
-        mapHelper.clickElement(mapHelper.searchButton , "Search button");
+        mapActivity.clickElement(mapActivity.searchButton , "Search button");
 
         //4.verify that the search page opened - (Tap the main menu icon(the magnifying glass icon)
-        navigationHelper =  new NavigationHelper(driver);
-        navigationHelper.verifySearchViewOpen();
+        navigationActivity =  new NavigationActivity(driver);
+        navigationActivity.verifySearchViewOpen();
 
         //5.write hike in the edit box
-        navigationHelper.sendKeysToWebElementInput(navigationHelper.searchBox,"nike");
+        navigationActivity.sendKeysToWebElementInput(navigationActivity.searchBox,"nike");
 
         //6.Tap the close icon in the search box
-        navigationHelper.clickElement(navigationHelper.exitSearch , "Exit button");
+        navigationActivity.clickElement(navigationActivity.exitSearch , "Exit button");
 
         //7.Enter the string 'hike' and tap enter
-        navigationHelper.sendKeysToWebElementInput(navigationHelper.searchBox,"nike" );
-        navigationHelper.sendKeyboardKeys(navigationHelper.SEARCHBUTTON , "Search");
+        navigationActivity.sendKeysToWebElementInput(navigationActivity.searchBox,"nike" );
+        navigationActivity.sendKeyboardKeys(navigationActivity.SEARCHBUTTON , "Search");
 
         //8.Search results should appear after a few seconds
-        navigationResultsHelper = new NavigationResultsHelper(driver);
-        navigationResultsHelper.verifyThatWeCanSeeTheResults();
+        navigationSearchResultsActivity = new NavigationSearchResultsActivity(driver);
+        navigationSearchResultsActivity.verifyThatWeCanSeeTheResults();
 
         //9.Tap 'Google'
-        navigationResultsHelper.clickOnTheBottomObject(2 , "Google");
+        navigationSearchResultsActivity.clickOnTheBottomObject(2 , "Google");
 
         //10.Tap 'Places'
-        navigationResultsHelper.clickOnTheBottomObject(1 , "Places");
+        navigationSearchResultsActivity.clickOnTheBottomObject(1 , "Places");
 
         //11.Tap 'Search Results'
-        navigationResultsHelper.clickOnTheBottomObject(0 , "Search Results");
+        navigationSearchResultsActivity.clickOnTheBottomObject(0 , "Search Results");
 
         //12.Search the first results
-        navigationResultsHelper.selectSearchResult(0);
+        navigationSearchResultsActivity.selectSearchResult(0);
 
         //13.Tap the 'more options' icon (the grey rectangle with the three white dots)
-        navigationHelper.clickElement(navigationHelper.threeDots , "more options");
+        navigationActivity.clickElement(navigationActivity.moreOptionButton , "more options");
 
        //14.Tap back(the Android action button)
-        navigationHelper.clickBackOnTheDevice();
+        navigationActivity.clickBackOnTheDevice();
 
         //15.Tap 'GO'
-        navigationHelper.clickElement(navigationHelper.previewGoButton , "preview go");
+        addressPreviewActivity = new AddressPreviewActivity(driver);
+        addressPreviewActivity.clickElement(addressPreviewActivity.previewGoButton , "preview go");
 
         //16.Tap 'GO now'
-        navigationHelper.clickElement(navigationHelper.goButton , "go now");
+        goNowPopupActivity = new GoNowPopupActivity(driver);
+        goNowPopupActivity.clickElement(goNowPopupActivity.goButton , "go now");
 
         //17.Tap the navigation list bar(where the route directions are)
-        mapHelper = new MapHelper(driver);
-        mapHelper.clickElement(mapHelper.topBarButton , "navigation list bar");
+        mapActivity = new MapActivity(driver);
+        mapActivity.clickElement(mapActivity.topBarButton , "navigation list bar");
 
         //18.Tap 'Reports Ahead'
-        directionsHelper = new DirectionsHelper(driver);
-        directionsHelper.clickElement(directionsHelper.reportAhead , "Reports Ahead");
+        directionsActivity = new DirectionsActivity(driver);
+        directionsActivity.clickElement(directionsActivity.reportAhead , "Reports Ahead");
 
         //19.Tap 'Next Turns'
-        directionsHelper.clickElement(directionsHelper.nextTurns , "Next Turns");
+        directionsActivity.clickElement(directionsActivity.nextTurns , "Next Turns");
 
         //20.Tap back(the Android action button)
-        navigationHelper.clickBackOnTheDevice();
+        directionsActivity.clickBackOnTheDevice();
 
         //21.Open the ETA popup by tapping the blue eta arrow
-        mapHelper = new MapHelper(driver);
-        mapHelper.tapOnTheScreenByCoordinates(mapHelper.kmOfDriving.getLocation().getX() - mapHelper.minutesOfDriving.getLocation().getX()  , mapHelper.kmOfDriving.getLocation().getY(), "blue eta arrow");
+        mapActivity = new MapActivity(driver);
+        mapActivity.tapOnTheScreenByCoordinates(mapActivity.kmOfDriving.getLocation().getX() - mapActivity.minutesOfDriving.getLocation().getX()  , mapActivity.kmOfDriving.getLocation().getY(), "blue eta arrow");
 
         //22.Tap 'stop'
-        etaPopupHelper = new ETAPopupHelper(driver);
-        etaPopupHelper.clickElement(etaPopupHelper.stopButton , "stop button");
+        etaPopupActivity = new EtaPopupActivity(driver);
+        etaPopupActivity.clickElement(etaPopupActivity.stopButton , "stop button");
 
         //23.Tap 'No thanks'
-        confirmHelper = new ConfirmHelper(driver);
-        confirmHelper.clickElement(confirmHelper.noThanksButton ,"No thanks");
-
+        confirmPopupActivity = new ConfirmPopupActivity(driver);
+        if(confirmPopupActivity.noThanksButton.isDisplayed()) {
+            confirmPopupActivity.clickElement(confirmPopupActivity.noThanksButton ,"No thanks");
+        }
 
         System.out.println("Done.");
         ATUReports.add("Message window.","Done." , "Done." , LogAs.PASSED , null);

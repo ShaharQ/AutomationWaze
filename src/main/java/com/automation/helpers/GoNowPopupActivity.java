@@ -6,18 +6,12 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 /**
- * Created by mkalash on 3/13/17.
+ * Created by mkalash on 3/14/17.
  */
+public class GoNowPopupActivity extends DefaultActivity {
 
-public class NameFavoritePopupHelper extends DefaultHelper {
-
-    @FindBy(id = "com.waze:id/btnDone")
-    public WebElement doneButton;
-    @FindBy(id = "com.waze:id/btnCancel")
-    public WebElement cancelButton;
-    @FindBy(id = "com.waze:id/nameEditText")
-    public WebElement nameOfFavorite;
-
+    @FindBy(id ="com.waze:id/fragNavResGo")
+    public WebElement goButton;
 
     //Set Peopert for ATU Reporter Configuration
     {
@@ -25,8 +19,9 @@ public class NameFavoritePopupHelper extends DefaultHelper {
 
     }
 
-    public NameFavoritePopupHelper(AppiumDriver driver) {
+    public GoNowPopupActivity(AppiumDriver driver) {
         super(driver);
         PageFactory.initElements(driver,this);
     }
+
 }
