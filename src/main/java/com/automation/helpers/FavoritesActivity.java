@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by mkalash on 3/13/17.
  */
-public class FavoriteActivity extends DefaultActivity {
+public class FavoritesActivity extends DefaultActivity {
 
     @FindBy(id = "com.waze:id/addressItem")
     public WebElement addFavoriteAddress;
@@ -24,7 +24,7 @@ public class FavoriteActivity extends DefaultActivity {
 
     }
 
-    public FavoriteActivity(AppiumDriver driver) {
+    public FavoritesActivity(AppiumDriver driver) {
         super(driver);
         PageFactory.initElements(driver,this);
     }

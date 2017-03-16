@@ -10,7 +10,7 @@ import java.net.MalformedURLException;
 public class LoginActivity extends DefaultActivity {
 
     private MapActivity mapActivity;
-    private NavigationActivity navigationActivity;
+    private NavigateActivity navigateActivity;
     private WazeAccountActivity wazeAccountHelper;
 
     //Set Peopert for ATU Reporter Configuration
@@ -28,8 +28,8 @@ public class LoginActivity extends DefaultActivity {
         mapActivity = new MapActivity(driver);
         mapActivity.clickElement(mapActivity.map , "Map");
         mapActivity.clickElement(mapActivity.searchButton , "Search button");
-        navigationActivity =  new NavigationActivity(driver);
-        navigationActivity.clickElement(navigationActivity.profiePicture,"Profile picture");
+        navigateActivity =  new NavigateActivity(driver);
+        navigateActivity.clickElement(navigateActivity.profiePicture,"Profile picture");
         wazeAccountHelper = new WazeAccountActivity(driver);
         wazeAccountHelper.clickElement(wazeAccountHelper.existAccount,"existing Account");
         wazeAccountHelper = new WazeAccountActivity(driver);

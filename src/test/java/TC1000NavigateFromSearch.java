@@ -18,12 +18,11 @@ public class TC1000NavigateFromSearch {
     }
     private AppiumDriver driver;
     private MapActivity mapActivity;
-    private NavigationSearchResultsActivity navigationSearchResultsActivity;
+    private SearchResultsActivity searchResultsActivity;
     private AddressPreviewActivity addressPreviewActivity;
-    private NavigationActivity navigationActivity;
+    private NavigateActivity navigateActivity;
     private DirectionsActivity directionsActivity;
     private EtaPopupActivity etaPopupActivity;
-    private GoNowPopupActivity goNowPopupActivity;
     private ConfirmPopupActivity confirmPopupActivity;
     private String proccessName , phoneName;
     private DriverManager driverManager = new DriverManager();
@@ -38,7 +37,6 @@ public class TC1000NavigateFromSearch {
         Utils.startAppiumNode(proccessName);
         driver = driverManager.getDriver( System.getProperty("Phone"), "4444");
 
-
     }
 
     @AfterClass
@@ -52,15 +50,6 @@ public class TC1000NavigateFromSearch {
     @Test
     public void test() throws InterruptedException, IOException, AWTException {
 
-
-        //1.pre test if we get the popup of drive now or later
-//        confirmPopupActivity = new ConfirmPopupActivity(driver);
-//       if(confirmPopupActivity.driverNowOrLaterPopUp.isDisplayed()) {
-//           confirmPopupActivity.clickElement(confirmPopupActivity.driverNowButton, "drive now button");
-//           confirmPopupActivity.clickBackOnTheDevice();
-//           confirmPopupActivity.clickBackOnTheDevice();
-//        }
-
         //pre test after the app startup all the tooltips and encouragments should be eliminated
         //2.click anywhere on the screen
         mapActivity = new MapActivity(driver);
@@ -70,48 +59,48 @@ public class TC1000NavigateFromSearch {
         mapActivity.clickElement(mapActivity.searchButton , "Search button");
 
         //4.verify that the search page opened - (Tap the main menu icon(the magnifying glass icon)
-        navigationActivity =  new NavigationActivity(driver);
-        navigationActivity.verifySearchViewOpen();
+        navigateActivity =  new NavigateActivity(driver);
+        navigateActivity.verifySearchViewOpen();
 
         //5.write hike in the edit box
-        navigationActivity.sendKeysToWebElementInput(navigationActivity.searchBox,"nike");
+        navigateActivity.sendKeysToWebElementInput(navigateActivity.searchBox,"nike");
 
         //6.Tap the close icon in the search box
-        navigationActivity.clickElement(navigationActivity.exitSearch , "Exit button");
+        navigateActivity.clickElement(navigateActivity.exitSearch , "Exit button");
 
         //7.Enter the string 'hike' and tap enter
-        navigationActivity.sendKeysToWebElementInput(navigationActivity.searchBox,"nike" );
-        navigationActivity.sendKeyboardKeys(navigationActivity.SEARCHBUTTON , "Search");
+        navigateActivity.sendKeysToWebElementInput(navigateActivity.searchBox,"nike" );
+        navigateActivity.sendKeyboardKeys(navigateActivity.SEARCHBUTTON , "Search");
 
         //8.Search results should appear after a few seconds
-        navigationSearchResultsActivity = new NavigationSearchResultsActivity(driver);
-        navigationSearchResultsActivity.verifyThatWeCanSeeTheResults();
+        searchResultsActivity = new SearchResultsActivity(driver);
+        searchResultsActivity.verifyThatWeCanSeeTheResults();
 
         //9.Tap 'Google'
-        navigationSearchResultsActivity.clickOnTheBottomObject(2 , "Google");
+        searchResultsActivity.clickOnTheBottomObject(2 , "Google");
 
         //10.Tap 'Places'
-        navigationSearchResultsActivity.clickOnTheBottomObject(1 , "Places");
+        searchResultsActivity.clickOnTheBottomObject(1 , "Places");
 
         //11.Tap 'Search Results'
-        navigationSearchResultsActivity.clickOnTheBottomObject(0 , "Search Results");
+        searchResultsActivity.clickOnTheBottomObject(0 , "Search Results");
 
         //12.Search the first results
-        navigationSearchResultsActivity.selectSearchResult(0);
+        searchResultsActivity.selectSearchResult(0);
 
         //13.Tap the 'more options' icon (the grey rectangle with the three white dots)
-        navigationActivity.clickElement(navigationActivity.moreOptionButton , "more options");
+        navigateActivity.clickElement(navigateActivity.moreOptionButton , "more options");
 
        //14.Tap back(the Android action button)
-        navigationActivity.clickBackOnTheDevice();
+        navigateActivity.clickBackOnTheDevice();
 
         //15.Tap 'GO'
         addressPreviewActivity = new AddressPreviewActivity(driver);
         addressPreviewActivity.clickElement(addressPreviewActivity.previewGoButton , "preview go");
 
         //16.Tap 'GO now'
-        goNowPopupActivity = new GoNowPopupActivity(driver);
-        goNowPopupActivity.clickElement(goNowPopupActivity.goButton , "go now");
+        etaPopupActivity= new EtaPopupActivity(driver);
+        etaPopupActivity.clickElement(etaPopupActivity.goButton , "go now");
 
         //17.Tap the navigation list bar(where the route directions are)
         mapActivity = new MapActivity(driver);

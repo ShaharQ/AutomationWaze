@@ -23,17 +23,16 @@ public class NavigateSuite {
     }
     private AppiumDriver driver;
     private MapActivity mapActivity;
-    private NavigationActivity navigationActivity;
+    private NavigateActivity navigateActivity;
     private AddressPreviewActivity addressPreviewActivity;
     private DirectionsActivity directionsActivity;
     private AddressItemOptionPopupActivity addressItemOptionPopupActivity;
     private EtaPopupActivity etaPopupActivity;
     private ConfirmPopupActivity confirmPopupActivity;
-    private GoNowPopupActivity goNowPopupActivity;
-    private NavigationSearchResultsActivity  navigationSearchResultsActivity;
+    private SearchResultsActivity searchResultsActivity;
     private AddFavoriteActivity addFavoriteActivity;
     private NameFavoritePopupActivity nameFavoritePopupActivity;
-    private FavoriteActivity favoriteActivity;
+    private FavoritesActivity favoritesActivity;
     private String proccessName , phoneName;
     private DriverManager driverManager = new DriverManager();
 
@@ -85,27 +84,27 @@ public class NavigateSuite {
         mapActivity.clickElement(mapActivity.searchButton , "Search button");
 
         //4.Tap the search box
-        navigationActivity =  new NavigationActivity(driver);
-        navigationActivity.clickElement(navigationActivity.searchBox,"Search box");
+        navigateActivity =  new NavigateActivity(driver);
+        navigateActivity.clickElement(navigateActivity.searchBox,"Search box");
 
         //5.Tap 'Gas station' cell
-        navigationActivity.verifyThatTheTextOfTheElementIsAsExpected(navigationActivity.autoCompleteSearchResults.get(0),"Gas stations","תחנות דלק");
-        navigationActivity.clickElement(navigationActivity.autoCompleteSearchResults.get(0) , "Gas Station");
+        navigateActivity.verifyThatTheTextOfTheElementIsAsExpected(navigateActivity.autoCompleteSearchResults.get(0),"Gas stations","תחנות דלק");
+        navigateActivity.clickElement(navigateActivity.autoCompleteSearchResults.get(0) , "Gas Station");
 
         //6.verify the screen title is 'Gas Stations'
-        navigationSearchResultsActivity = new NavigationSearchResultsActivity(driver);
-        navigationSearchResultsActivity.verifyThatTheTextOfTheElementIsAsExpected(navigationSearchResultsActivity.titleBarText,"Gas stations","תחנות דלק" );
+        searchResultsActivity = new SearchResultsActivity(driver);
+        searchResultsActivity.verifyThatTheTextOfTheElementIsAsExpected(searchResultsActivity.titleBarText,"Gas stations","תחנות דלק" );
 
         //7.select the second Gas stations results
-        navigationSearchResultsActivity.clickElement(navigationSearchResultsActivity.autoCompleteSearchResults.get(1) , "Second Gas stations");
+        searchResultsActivity.clickElement(searchResultsActivity.autoCompleteSearchResults.get(1) , "Second Gas stations");
 
         //8.Tap 'GO'
         addressPreviewActivity = new AddressPreviewActivity(driver);
         addressPreviewActivity.clickElement(addressPreviewActivity.previewGoButton , "preview go");
 
         //9.Tap 'GO now'
-        goNowPopupActivity = new GoNowPopupActivity(driver);
-        goNowPopupActivity.clickElement(goNowPopupActivity.goButton , "go now");
+        etaPopupActivity = new EtaPopupActivity(driver);
+        etaPopupActivity.clickElement(etaPopupActivity.goButton , "go now");
 
         //10.Open the ETA popup by tapping the blue eta arrow
         mapActivity = new MapActivity(driver);
@@ -149,48 +148,48 @@ public class NavigateSuite {
         mapActivity.clickElement(mapActivity.searchButton , "Search button");
 
         //4.verify that the search page opened - (Tap the main menu icon(the magnifying glass icon)
-        navigationActivity =  new NavigationActivity(driver);
-        navigationActivity.verifySearchViewOpen();
+        navigateActivity =  new NavigateActivity(driver);
+        navigateActivity.verifySearchViewOpen();
 
         //5.write hike in the edit box
-        navigationActivity.sendKeysToWebElementInput(navigationActivity.searchBox,"nike");
+        navigateActivity.sendKeysToWebElementInput(navigateActivity.searchBox,"nike");
 
         //6.Tap the close icon in the search box
-        navigationActivity.clickElement(navigationActivity.exitSearch , "Exit button");
+        navigateActivity.clickElement(navigateActivity.exitSearch , "Exit button");
 
         //7.Enter the string 'hike' and tap enter
-        navigationActivity.sendKeysToWebElementInput(navigationActivity.searchBox,"nike" );
-        navigationActivity.sendKeyboardKeys(navigationActivity.SEARCHBUTTON , "Search");
+        navigateActivity.sendKeysToWebElementInput(navigateActivity.searchBox,"nike" );
+        navigateActivity.sendKeyboardKeys(navigateActivity.SEARCHBUTTON , "Search");
 
         //8.Search results should appear after a few seconds
-        navigationSearchResultsActivity = new NavigationSearchResultsActivity(driver);
-        navigationSearchResultsActivity.verifyThatWeCanSeeTheResults();
+        searchResultsActivity = new SearchResultsActivity(driver);
+        searchResultsActivity.verifyThatWeCanSeeTheResults();
 
         //9.Tap 'Google'
-        navigationSearchResultsActivity.clickOnTheBottomObject(2 , "Google");
+        searchResultsActivity.clickOnTheBottomObject(2 , "Google");
 
         //10.Tap 'Places'
-        navigationSearchResultsActivity.clickOnTheBottomObject(1 , "Places");
+        searchResultsActivity.clickOnTheBottomObject(1 , "Places");
 
         //11.Tap 'Search Results'
-        navigationSearchResultsActivity.clickOnTheBottomObject(0 , "Search Results");
+        searchResultsActivity.clickOnTheBottomObject(0 , "Search Results");
 
         //12.Search the first results
-        navigationSearchResultsActivity.selectSearchResult(0);
+        searchResultsActivity.selectSearchResult(0);
 
         //13.Tap the 'more options' icon (the grey rectangle with the three white dots)
-        navigationActivity.clickElement(navigationActivity.moreOptionButton , "more options");
+        navigateActivity.clickElement(navigateActivity.moreOptionButton , "more options");
 
         //14.Tap back(the Android action button)
-        navigationActivity.clickBackOnTheDevice();
+        navigateActivity.clickBackOnTheDevice();
 
         //15.Tap 'GO'
         addressPreviewActivity = new AddressPreviewActivity(driver);
         addressPreviewActivity.clickElement(addressPreviewActivity.previewGoButton , "preview go");
 
         //16.Tap 'GO now'
-        goNowPopupActivity = new GoNowPopupActivity(driver);
-        goNowPopupActivity.clickElement(goNowPopupActivity.goButton , "go now");
+        etaPopupActivity = new EtaPopupActivity(driver);
+        etaPopupActivity.clickElement(etaPopupActivity.goButton , "go now");
 
         //17.Tap the navigation list bar(where the route directions are)
         mapActivity = new MapActivity(driver);
@@ -240,10 +239,10 @@ public class NavigateSuite {
         mapActivity.clickElement(mapActivity.searchButton , "Search button");
 
         //3.precondition : the user should have an empty home favorite ,
-        navigationActivity = new NavigationActivity(driver);
-        if(navigationActivity.isElementDisplay(navigationActivity.homeFavoriteDot.get(0))) {
+        navigateActivity = new NavigateActivity(driver);
+        if(navigateActivity.isElementDisplay(navigateActivity.homeFavoriteDot.get(0))) {
             //3.1 tap the more options icon (the three grey dots)
-            navigationActivity.clickElement(navigationActivity.favoriteList.get(0), "more options");
+            navigateActivity.clickElement(navigateActivity.favoriteList.get(0), "more options");
 
             //3.2 tap the remove cell - this cell isn't fully visible when tapping
             //the more options icon. Notice that swiping is required to make it fully visible
@@ -253,24 +252,24 @@ public class NavigateSuite {
         }
         //end precondition - home address is now removed
         //4.tap the home favorite cell
-        navigationActivity =  new NavigationActivity(driver);
-        navigationActivity.clickElement(navigationActivity.favoriteList.get(0), "home favorite");
+        navigateActivity =  new NavigateActivity(driver);
+        navigateActivity.clickElement(navigateActivity.favoriteList.get(0), "home favorite");
 
         //5.enter the string 'rehovot' abd tap enter
-        navigationActivity.sendKeysToWebElementInput(navigationActivity.searchBox,"rehovot");
-        navigationActivity.sendKeyboardKeys(navigationActivity.SEARCHBUTTON , "Search");
+        navigateActivity.sendKeysToWebElementInput(navigateActivity.searchBox,"rehovot");
+        navigateActivity.sendKeyboardKeys(navigateActivity.SEARCHBUTTON , "Search");
 
         //6.Search the first results
-        navigationSearchResultsActivity = new NavigationSearchResultsActivity(driver);
-        navigationSearchResultsActivity.selectSearchResult(0);
+        searchResultsActivity = new SearchResultsActivity(driver);
+        searchResultsActivity.selectSearchResult(0);
 
         //7. tap 'set work & go'
         addressPreviewActivity = new AddressPreviewActivity(driver);
         addressPreviewActivity.clickElement(addressPreviewActivity.addAdressButton, "add address button");
 
         //8.Tap 'GO now'
-        goNowPopupActivity = new GoNowPopupActivity(driver);
-        goNowPopupActivity.clickElement(goNowPopupActivity.goButton , "go now");
+        etaPopupActivity = new EtaPopupActivity(driver);
+        etaPopupActivity.clickElement(etaPopupActivity.goButton , "go now");
 
         //9.Open the ETA popup by tapping the blue eta arrow
         mapActivity = new MapActivity(driver);
@@ -304,10 +303,10 @@ public class NavigateSuite {
         mapActivity.clickElement(mapActivity.searchButton , "Search button");
 
         //3.precondition : the user should have an empty work favorite
-        navigationActivity = new NavigationActivity(driver);
-        if(navigationActivity.isTheWorkNavigationIsDefine()) {
+        navigateActivity = new NavigateActivity(driver);
+        if(navigateActivity.isTheWorkNavigationIsDefine()) {
             //3.1 tap the more options icon (the three grey dots)
-            navigationActivity.clickElement(navigationActivity.favoriteList.get(1), "more option");
+            navigateActivity.clickElement(navigateActivity.favoriteList.get(1), "more option");
 
             //3.2 tap the remove cell - this cell isn't fully visible when tapping
             //the more options icon. Notice that swiping is required to make it fully visible
@@ -317,24 +316,24 @@ public class NavigateSuite {
         }
         //end precondition - home address is now removed
         //4.tap the home favorite cell
-        navigationActivity =  new NavigationActivity(driver);
-        navigationActivity.clickElement(navigationActivity.favoriteList.get(1), "work favorite");
+        navigateActivity =  new NavigateActivity(driver);
+        navigateActivity.clickElement(navigateActivity.favoriteList.get(1), "work favorite");
 
         //5.enter the string 'tel aviv' abd tap enter
-        navigationActivity.sendKeysToWebElementInput(navigationActivity.searchBox,"tel aviv");
-        navigationActivity.sendKeyboardKeys(navigationActivity.SEARCHBUTTON , "Search");
+        navigateActivity.sendKeysToWebElementInput(navigateActivity.searchBox,"tel aviv");
+        navigateActivity.sendKeyboardKeys(navigateActivity.SEARCHBUTTON , "Search");
 
         //6.Search the first results
-        navigationSearchResultsActivity = new NavigationSearchResultsActivity(driver);
-        navigationSearchResultsActivity.selectSearchResult(0);
+        searchResultsActivity = new SearchResultsActivity(driver);
+        searchResultsActivity.selectSearchResult(0);
 
         //7. tap 'set work & go'
         addressPreviewActivity= new AddressPreviewActivity(driver);
         addressPreviewActivity.clickElement(addressPreviewActivity.addAdressButton, "add address button");
 
         //8.Tap 'GO now'
-        goNowPopupActivity = new GoNowPopupActivity(driver);
-        goNowPopupActivity.clickElement(goNowPopupActivity.goButton , "go now");
+        etaPopupActivity = new EtaPopupActivity(driver);
+        etaPopupActivity.clickElement(etaPopupActivity.goButton , "go now");
 
         //9.Open the ETA popup by tapping the blue eta arrow
         mapActivity = new MapActivity(driver);
@@ -367,25 +366,25 @@ public class NavigateSuite {
         mapActivity.clickElement(mapActivity.searchButton , "Search button");
 
         //3.precondition : if the user have empty favorite
-        navigationActivity = new NavigationActivity(driver);
-        navigationActivity.clickElement(navigationActivity.searchLayout.get(2) ,"favorite");
+        navigateActivity = new NavigateActivity(driver);
+        navigateActivity.clickElement(navigateActivity.searchLayout.get(2) ,"favorite");
 
         //4.Select the first favorite which is not home or work
         addFavoriteActivity = new AddFavoriteActivity(driver);
         String nameToPress =   addFavoriteActivity.findNameThatIsntWorkOrHome();
         if(nameToPress == null) {
             //5.Tap on the favorite
-            favoriteActivity = new FavoriteActivity(driver);
-            favoriteActivity.clickElement(favoriteActivity.addFavoriteAddress , "add favorite");
+            favoritesActivity = new FavoritesActivity(driver);
+            favoritesActivity.clickElement(favoritesActivity.addFavoriteAddress , "add favorite");
 
             //6.enter the string bat yam
             addFavoriteActivity = new AddFavoriteActivity(driver);
             addFavoriteActivity.sendKeysToWebElementInput(addFavoriteActivity.searchBoxFavorite,"bat yam");
-            addFavoriteActivity.sendKeyboardKeys(navigationActivity.SEARCHBUTTON , "Search");
+            addFavoriteActivity.sendKeyboardKeys(navigateActivity.SEARCHBUTTON , "Search");
 
             //7.Search the first results
-            navigationSearchResultsActivity = new NavigationSearchResultsActivity(driver);
-            navigationSearchResultsActivity.selectSearchResult(0);
+            searchResultsActivity = new SearchResultsActivity(driver);
+            searchResultsActivity.selectSearchResult(0);
 
             //8.Tap on finish
             nameFavoritePopupActivity = new NameFavoritePopupActivity(driver);
@@ -399,7 +398,7 @@ public class NavigateSuite {
             mapActivity.clickElement(mapActivity.searchButton , "Search button");
 
             //11.precondition : if the user have empty favorite
-            navigationActivity.clickElement(navigationActivity.searchLayout.get(2) ,"favorite");
+            navigateActivity.clickElement(navigateActivity.searchLayout.get(2) ,"favorite");
 
             nameToPress =   addFavoriteActivity.findNameThatIsntWorkOrHome();
             addFavoriteActivity.pressOnTheLayoutWithThatString(addFavoriteActivity.favoriteLayouts,nameToPress);
@@ -408,8 +407,8 @@ public class NavigateSuite {
         }
 
         //11.Tap ‘Go now’
-        goNowPopupActivity = new GoNowPopupActivity(driver);
-        goNowPopupActivity.clickElement(goNowPopupActivity.goButton , "go now");
+        etaPopupActivity = new EtaPopupActivity(driver);
+        etaPopupActivity.clickElement(etaPopupActivity.goButton , "go now");
 
         //12.Open the ETA popup by tapping the blue eta arrow
         mapActivity = new MapActivity(driver);

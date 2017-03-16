@@ -17,6 +17,8 @@ public class EtaPopupActivity extends DefaultActivity {
         public WebElement stopButton;
         @FindBy(className = "android.widget.LinearLayout")
         public List<WebElement> stopButtonNew;
+        @FindBy(id ="com.waze:id/fragNavResGo")
+        public WebElement goButton;
 
 
         //Set Peopert for ATU Reporter Configuration

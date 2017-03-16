@@ -25,12 +25,11 @@ public class TC1004NavigateToFavorite {
     }
     private AppiumDriver driver;
     private MapActivity mapActivity;
-    private NavigationActivity navigationActivity;
-    private NavigationSearchResultsActivity navigationSearchResultsActivity;
+    private NavigateActivity navigateActivity;
+    private SearchResultsActivity searchResultsActivity;
     private EtaPopupActivity etaPopupActivity;
     private ConfirmPopupActivity confirmPopupActivity;
-    private FavoriteActivity favoriteActivity;
-    private GoNowPopupActivity goNowPopupActivity;
+    private FavoritesActivity favoritesActivity;
     private AddFavoriteActivity addFavoriteActivity;
     private NameFavoritePopupActivity nameFavoritePopupActivity;
     private String proccessName , phoneName;
@@ -67,25 +66,25 @@ public class TC1004NavigateToFavorite {
         mapActivity.clickElement(mapActivity.searchButton , "Search button");
 
         //3.precondition : if the user have empty favorite
-        navigationActivity = new NavigationActivity(driver);
-        navigationActivity.clickElement(navigationActivity.searchLayout.get(2) ,"favorite");
+        navigateActivity = new NavigateActivity(driver);
+        navigateActivity.clickElement(navigateActivity.searchLayout.get(2) ,"favorite");
 
         //4.Select the first favorite which is not home or work
         addFavoriteActivity = new AddFavoriteActivity(driver);
         String nameToPress =   addFavoriteActivity.findNameThatIsntWorkOrHome();
         if(nameToPress == null) {
             //5.Tap on the favorite
-            favoriteActivity = new FavoriteActivity(driver);
-            favoriteActivity.clickElement(favoriteActivity.addFavoriteAddress , "add favorite");
+            favoritesActivity = new FavoritesActivity(driver);
+            favoritesActivity.clickElement(favoritesActivity.addFavoriteAddress , "add favorite");
 
             //6.enter the string bat yam
             addFavoriteActivity = new AddFavoriteActivity(driver);
             addFavoriteActivity.sendKeysToWebElementInput(addFavoriteActivity.searchBoxFavorite,"bat yam");
-            addFavoriteActivity.sendKeyboardKeys(navigationActivity.SEARCHBUTTON , "Search");
+            addFavoriteActivity.sendKeyboardKeys(navigateActivity.SEARCHBUTTON , "Search");
 
             //7.Search the first results
-            navigationSearchResultsActivity = new NavigationSearchResultsActivity(driver);
-            navigationSearchResultsActivity.selectSearchResult(0);
+            searchResultsActivity = new SearchResultsActivity(driver);
+            searchResultsActivity.selectSearchResult(0);
 
             //8.Tap on finish
             nameFavoritePopupActivity = new NameFavoritePopupActivity(driver);
@@ -99,7 +98,7 @@ public class TC1004NavigateToFavorite {
             mapActivity.clickElement(mapActivity.searchButton , "Search button");
 
             //11.precondition : if the user have empty favorite
-            navigationActivity.clickElement(navigationActivity.searchLayout.get(2) ,"favorite");
+            navigateActivity.clickElement(navigateActivity.searchLayout.get(2) ,"favorite");
 
             nameToPress =   addFavoriteActivity.findNameThatIsntWorkOrHome();
             addFavoriteActivity.pressOnTheLayoutWithThatString(addFavoriteActivity.favoriteLayouts,nameToPress);
@@ -108,8 +107,8 @@ public class TC1004NavigateToFavorite {
         }
 
         //11.Tap ‘Go now’
-        goNowPopupActivity = new GoNowPopupActivity(driver);
-        goNowPopupActivity.clickElement(goNowPopupActivity.goButton , "go now");
+        etaPopupActivity = new EtaPopupActivity(driver);
+        etaPopupActivity.clickElement(etaPopupActivity.goButton , "go now");
 
         //12.Open the ETA popup by tapping the blue eta arrow
         mapActivity = new MapActivity(driver);

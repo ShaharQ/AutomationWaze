@@ -26,10 +26,9 @@ public class TC1002NavigateHome {
     }
     private AppiumDriver driver;
     private MapActivity mapActivity;
-    private NavigationActivity navigationActivity;
-    private NavigationSearchResultsActivity navigationSearchResultsActivity;
+    private NavigateActivity navigateActivity;
+    private SearchResultsActivity searchResultsActivity;
     private EtaPopupActivity etaPopupActivity;
-    private GoNowPopupActivity goNowPopupActivity;
     private ConfirmPopupActivity confirmPopupActivity;
     private AddressItemOptionPopupActivity addressItemOptionPopupActivity;
     private AddressPreviewActivity addressPreviewActivity;
@@ -67,10 +66,10 @@ public class TC1002NavigateHome {
         mapActivity.clickElement(mapActivity.searchButton , "Search button");
 
         //3.precondition : the user should have an empty home favorite ,
-        navigationActivity = new NavigationActivity(driver);
-        if(navigationActivity.isElementDisplay(navigationActivity.homeFavoriteDot.get(0))) {
+        navigateActivity = new NavigateActivity(driver);
+        if(navigateActivity.isElementDisplay(navigateActivity.homeFavoriteDot.get(0))) {
             //3.1 tap the more options icon (the three grey dots)
-            navigationActivity.clickElement(navigationActivity.favoriteList.get(0), "more options");
+            navigateActivity.clickElement(navigateActivity.favoriteList.get(0), "more options");
 
             //3.2 tap the remove cell - this cell isn't fully visible when tapping
             //the more options icon. Notice that swiping is required to make it fully visible
@@ -80,24 +79,24 @@ public class TC1002NavigateHome {
         }
         //end precondition - home address is now removed
         //4.tap the home favorite cell
-        navigationActivity =  new NavigationActivity(driver);
-        navigationActivity.clickElement(navigationActivity.favoriteList.get(0), "home favorite");
+        navigateActivity =  new NavigateActivity(driver);
+        navigateActivity.clickElement(navigateActivity.favoriteList.get(0), "home favorite");
 
         //5.enter the string 'rehovot' abd tap enter
-        navigationActivity.sendKeysToWebElementInput(navigationActivity.searchBox,"rehovot");
-        navigationActivity.sendKeyboardKeys(navigationActivity.SEARCHBUTTON , "Search");
+        navigateActivity.sendKeysToWebElementInput(navigateActivity.searchBox,"rehovot");
+        navigateActivity.sendKeyboardKeys(navigateActivity.SEARCHBUTTON , "Search");
 
         //6.Search the first results
-        navigationSearchResultsActivity = new NavigationSearchResultsActivity(driver);
-        navigationSearchResultsActivity.selectSearchResult(0);
+        searchResultsActivity = new SearchResultsActivity(driver);
+        searchResultsActivity.selectSearchResult(0);
 
         //7. tap 'set work & go'
         addressPreviewActivity = new AddressPreviewActivity(driver);
         addressPreviewActivity.clickElement(addressPreviewActivity.addAdressButton, "add address button");
 
         //8.Tap 'GO now'
-        goNowPopupActivity = new GoNowPopupActivity(driver);
-        goNowPopupActivity.clickElement(goNowPopupActivity.goButton , "go now");
+        etaPopupActivity = new EtaPopupActivity(driver);
+        etaPopupActivity.clickElement(etaPopupActivity.goButton , "go now");
 
         //9.Open the ETA popup by tapping the blue eta arrow
         mapActivity = new MapActivity(driver);

@@ -20,7 +20,7 @@ import java.util.List;
  */
 
 @Listeners({ ATUReportsListener.class, ConfigurationListener.class, MethodListener.class })
-public class NavigationActivity extends DefaultActivity {
+public class NavigateActivity extends DefaultActivity {
 
     //Set Peopert for ATU Reporter Configuration
     {
@@ -51,7 +51,7 @@ public class NavigationActivity extends DefaultActivity {
     public List<WebElement> searchLayout;
 
 
-    public NavigationActivity(AppiumDriver driver) throws InterruptedException {
+    public NavigateActivity(AppiumDriver driver) throws InterruptedException {
         super(driver);
         Thread.sleep(500);
         PageFactory.initElements(driver,this);

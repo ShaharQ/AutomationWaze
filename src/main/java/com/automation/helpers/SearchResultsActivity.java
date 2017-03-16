@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by mkalash on 3/14/17.
  */
-public class NavigationSearchResultsActivity extends DefaultActivity {
+public class SearchResultsActivity extends DefaultActivity {
 
     @FindBy(id ="com.waze:id/mainContainer")
     public List<WebElement> searchResults;
@@ -32,7 +32,7 @@ public class NavigationSearchResultsActivity extends DefaultActivity {
 
     }
 
-    public NavigationSearchResultsActivity(AppiumDriver driver) {
+    public SearchResultsActivity(AppiumDriver driver) {
         super(driver);
         PageFactory.initElements(driver,this);
 

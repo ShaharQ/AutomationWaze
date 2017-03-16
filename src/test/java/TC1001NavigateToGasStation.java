@@ -25,11 +25,10 @@ public class TC1001NavigateToGasStation {
     }
     private AppiumDriver driver;
     private MapActivity mapActivity;
-    private NavigationActivity navigationActivity;
-    private NavigationSearchResultsActivity navigationSearchResultsActivity;
+    private NavigateActivity navigateActivity;
+    private SearchResultsActivity searchResultsActivity;
     private AddressPreviewActivity addressPreviewActivity;
     private EtaPopupActivity etaPopupActivity;
-    private GoNowPopupActivity goNowPopupActivity;
     private ConfirmPopupActivity confirmPopupActivity;
     private String proccessName , phoneName;
     private DriverManager driverManager = new DriverManager();
@@ -72,27 +71,27 @@ public class TC1001NavigateToGasStation {
         mapActivity.clickElement(mapActivity.searchButton , "Search button");
 
         //4.Tap the search box
-        navigationActivity =  new NavigationActivity(driver);
-        navigationActivity.clickElement(navigationActivity.searchBox,"Search box");
+        navigateActivity =  new NavigateActivity(driver);
+        navigateActivity.clickElement(navigateActivity.searchBox,"Search box");
 
         //5.Tap 'Gas station' cell
-        navigationActivity.verifyThatTheTextOfTheElementIsAsExpected(navigationActivity.autoCompleteSearchResults.get(0),"Gas stations","תחנות דלק");
-        navigationActivity.clickElement(navigationActivity.autoCompleteSearchResults.get(0) , "Gas Station");
+        navigateActivity.verifyThatTheTextOfTheElementIsAsExpected(navigateActivity.autoCompleteSearchResults.get(0),"Gas stations","תחנות דלק");
+        navigateActivity.clickElement(navigateActivity.autoCompleteSearchResults.get(0) , "Gas Station");
 
         //6.verify the screen title is 'Gas Stations'
-        navigationSearchResultsActivity = new NavigationSearchResultsActivity(driver);
-        navigationSearchResultsActivity.verifyThatTheTextOfTheElementIsAsExpected(navigationSearchResultsActivity.titleBarText,"Gas stations","תחנות דלק" );
+        searchResultsActivity = new SearchResultsActivity(driver);
+        searchResultsActivity.verifyThatTheTextOfTheElementIsAsExpected(searchResultsActivity.titleBarText,"Gas stations","תחנות דלק" );
 
         //7.select the second Gas stations results
-        navigationSearchResultsActivity.clickElement(navigationSearchResultsActivity.autoCompleteSearchResults.get(1) , "Second Gas stations");
+        searchResultsActivity.clickElement(searchResultsActivity.autoCompleteSearchResults.get(1) , "Second Gas stations");
 
         //8.Tap 'GO'
         addressPreviewActivity = new AddressPreviewActivity(driver);
         addressPreviewActivity.clickElement(addressPreviewActivity.previewGoButton , "preview go");
 
         //9.Tap 'GO now'
-        goNowPopupActivity = new GoNowPopupActivity(driver);
-        goNowPopupActivity.clickElement(goNowPopupActivity.goButton , "go now");
+        etaPopupActivity = new EtaPopupActivity(driver);
+        etaPopupActivity.clickElement(etaPopupActivity.goButton , "go now");
 
         //10.Open the ETA popup by tapping the blue eta arrow
         mapActivity = new MapActivity(driver);
