@@ -49,6 +49,8 @@ public class NavigateActivity extends DefaultActivity {
     public WebElement profiePicture;
     @FindBy(id = "com.waze:id/addressItem")
     public List<WebElement> searchLayout;
+    @FindBy(className = "android.widget.FrameLayout")
+    public List<WebElement> searchLayoutAutoComplete;
 
 
     public NavigateActivity(AppiumDriver driver) throws InterruptedException {
@@ -90,5 +92,17 @@ public class NavigateActivity extends DefaultActivity {
         return isNavigationDefine;
     }
 
+    public void selectSearchResultAutoComplete(int selectSearch) {
 
+        waitForVisibility((searchLayoutAutoComplete.get(selectSearch)));
+        if(searchLayoutAutoComplete.get(selectSearch).isDisplayed() ) {
+            clickElement(searchLayoutAutoComplete.get(selectSearch) , "result");
+            System.out.println("Clicked on the search result in the position: " + selectSearch);
+            ATUReports.add("Clicked on the search result in the position: " + selectSearch, "Success.","Success.", LogAs.PASSED, null);
+        } else {
+            System.out.println("Can't Clicked on the search result in the position: " + selectSearch);
+            ATUReports.add("Can't Click on the search result in the position: " + selectSearch, "Success.","Failed.", LogAs.FAILED, new CaptureScreen((CaptureScreen.ScreenshotOf.BROWSER_PAGE)));
+        }
+
+    }
 }

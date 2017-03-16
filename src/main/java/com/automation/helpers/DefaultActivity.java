@@ -166,7 +166,6 @@ public class DefaultActivity {
         try {
             waitForVisibility(web_element);
             web_element.clear();
-            web_element.click();
             driver.getKeyboard().sendKeys(target_input);
             System.out.println("Target keys sent to WebElement: " + target_input);
             ATUReports.add("Target keys sent.", target_input, target_input, LogAs.PASSED, new CaptureScreen((CaptureScreen.ScreenshotOf.BROWSER_PAGE)));
@@ -257,6 +256,17 @@ public class DefaultActivity {
         Dimension size = driver.manage().window().getSize();
         int starty = (int) (size.height * 0.8);
         int endy = (int) (size.height * 0.20);
+        int startx = size.width / 2;
+        driver.swipe(startx, starty, startx, endy, 1000);
+
+    }
+
+    public void swipeUp() {
+
+        driver.context("NATIVE_APP");
+        Dimension size = driver.manage().window().getSize();
+        int  endy= (int) (size.height * 0.8);
+        int starty = (int) (size.height * 0.20);
         int startx = size.width / 2;
         driver.swipe(startx, starty, startx, endy, 1000);
 
